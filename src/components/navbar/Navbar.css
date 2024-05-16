@@ -7,5 +7,6 @@
 
 .root {
   position: relative;
-  top: -260px; /* Move up by 50px */
+  top: 0;
+  margin-bottom: 20px;
 }
