@@ -1,17 +1,23 @@
-import './App.css'
-import SearchRecipe from './pages/SearchRecipe'
-import NavScrollExample from './components/navbar/Navbar'
-import Grid from './components/grid/Grid'
+import React from 'react';
+import './App.css';
+import SearchRecipe from './pages/SearchRecipe';
+import NavScrollExample from './components/navbar/Navbar';
+import Grid from './components/grid/Grid';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
-
+const App: React.FC = () => {
   return (
-    <div>
-    <NavScrollExample />
-    <h1>Recipes</h1>
-    <Grid />
-    <SearchRecipe />
-    </div>
+    <Router>
+      <div>
+        <NavScrollExample />
+        <h1>Recipes</h1>
+        <Routes>
+          <Route path="/" element={<Grid />} />
+          <Route path="/search" element={<SearchRecipe />} />
+          {/* Add more routes as needed */}
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

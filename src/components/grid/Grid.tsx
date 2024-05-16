@@ -31,7 +31,7 @@ const Grid: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${API_URL}?apiKey=${API_KEY}&query=${inputValue}&number=10`);
+        const response = await fetch(`${API_URL}?apiKey=${API_KEY}&query=${inputValue}&number=3`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -47,7 +47,7 @@ const Grid: React.FC = () => {
   };
 
   // Filter the recipes based on the search query and limit to 10 results
-  const filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(searchQuery)).slice(0, 10);
+  const filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(searchQuery)).slice(0, 3);
 
   // Log the filtered recipes to the console
   console.log('Filtered Recipes:', filteredRecipes);
