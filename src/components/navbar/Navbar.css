@@ -16,8 +16,13 @@
 .navbar {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: baseline;
   padding: 10px;
+  position: fixed; /* Added to fix the navbar to the top */
+  top: 0; /* Ensures the navbar is at the top */
+  width: 60%; /* Ensures the navbar takes the full width */
+  background-color: #fff; /* Optional: To make sure the navbar has a background */
+  z-index: 1000; /* Optional: To make sure the navbar is above other elements */
 }
 
 /* Tablet and above */

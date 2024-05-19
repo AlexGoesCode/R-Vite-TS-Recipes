@@ -25,7 +25,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className='app'>
       {/* <NavScrollExample /> */}
       <h1>Recipes</h1>
       <RouterProvider router={router} />
@@ -33,7 +33,7 @@ const App: React.FC = () => {
   );
 };
 
-const Root = () => {
+const Root: React.FC = () => {
   return (
     <>
       <NavScrollExample />
