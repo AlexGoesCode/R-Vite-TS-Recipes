@@ -4,6 +4,7 @@ import CustomNavbar from './components/navbar/CustomNavbar';
 import Grid from './components/grid/Grid';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (

@@ -5,7 +5,6 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import './CustomNavbar.css';
 
 interface NavbarProps {
@@ -46,9 +45,9 @@ const CustomNavbar = ({ onSearch }: NavbarProps) => {
             <Nav.Link as={Link} to='recipes'>
               Recipes
             </Nav.Link>
-            <Nav.Link as={Link} to='search'>
-              Search recipes
-            </Nav.Link>
+            {/* <Nav.Link as={Link} to='search'>
+              Recipes
+            </Nav.Link> */}
             {/* <NavDropdown title='Link' id='navbarScrollingDropdown'>
               <NavDropdown.Item as={Link} to='/ '>
                 Home
