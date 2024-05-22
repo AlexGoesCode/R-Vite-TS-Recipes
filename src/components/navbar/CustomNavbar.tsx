@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './CustomNavbar.css';
@@ -11,19 +11,19 @@ interface NavbarProps {
   onSearch: (query: string) => void;
 }
 
-const CustomNavbar = ({ onSearch }: NavbarProps) => {
-  const [searchQuery, setSearchQuery] = useState(''); // TypeScript infers the type as string
-  // (1.2) State to hold the search query
+const CustomNavbar = ({}: NavbarProps) => {
+  // const [searchQuery, setSearchQuery] = useState(''); // TypeScript infers the type as string
+  // // (1.2) State to hold the search query
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value); // Update the state with the new query
-    console.log('User is typing:', event.target.value); // Log the current input value
-  }; // (1.3) Handler for input change events
+  // const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchQuery(event.target.value); // Update the state with the new query
+  //   console.log('User is typing:', event.target.value); // Log the current input value
+  // }; // (1.3) Handler for input change events
 
-  const handleSearchClick = () => {
-    console.log('Search button clicked. Current search query:', searchQuery); // Log the search query
-    onSearch(searchQuery); // Call the onSearch prop with the current search query
-  }; // (1.4) Handler for search button click events
+  // const handleSearchClick = () => {
+  //   console.log('Search button clicked. Current search query:', searchQuery); // Log the search query
+  //   onSearch(searchQuery); // Call the onSearch prop with the current search query
+  // }; // (1.4) Handler for search button click events
 
   // Bootstrap Navbar
   return (
@@ -64,7 +64,7 @@ const CustomNavbar = ({ onSearch }: NavbarProps) => {
               Link
             </Nav.Link> */}
           </Nav>
-          <Form
+          {/* <Form
             className='d-flex'
             onSubmit={(e) => {
               e.preventDefault();
@@ -82,7 +82,7 @@ const CustomNavbar = ({ onSearch }: NavbarProps) => {
             <Button variant='outline-success' onClick={handleSearchClick}>
               Search
             </Button>
-          </Form>
+          </Form> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
