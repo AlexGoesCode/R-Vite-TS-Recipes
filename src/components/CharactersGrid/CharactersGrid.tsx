@@ -1,4 +1,3 @@
-import React from 'react';
 import './CharactersGrid.css';
 
 interface Character {
@@ -11,7 +10,7 @@ interface CharactersGridProps {
   characters: Character[];
 }
 
-const CharactersGrid: React.FC<CharactersGridProps> = ({ characters }) => {
+const CharactersGrid = ({ characters }: CharactersGridProps) => {
   return (
     <div className='grid-container'>
       {characters.map((character) => (

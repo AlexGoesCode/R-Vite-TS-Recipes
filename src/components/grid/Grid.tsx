@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Grid.css';
 import { API_KEY } from '../../assets/secret/secret';
 import CharactersGrid from '../CharactersGrid/CharactersGrid';
-
 
 interface Recipe {
   id: number;
@@ -10,7 +9,7 @@ interface Recipe {
   image: string;
 }
 
-const Grid: React.FC = () => {
+const Grid = () => {
   const [inputValue, setInputValue] = useState(''); // Manage the input value
   const [searchQuery, setSearchQuery] = useState(''); // Manage the search query state
   const [recipes, setRecipes] = useState<Recipe[]>([]); // Manage the fetched recipes
@@ -31,7 +30,9 @@ const Grid: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${API_URL}?apiKey=${API_KEY}&query=${inputValue}&number=3`);
+        const response = await fetch(
+          `${API_URL}?apiKey=${API_KEY}&query=${inputValue}&number=3`
+        );
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -47,7 +48,9 @@ const Grid: React.FC = () => {
   };
 
   // Filter the recipes based on the search query and limit to 10 results
-  const filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(searchQuery)).slice(0, 3);
+  const filteredRecipes = recipes
+    .filter((recipe) => recipe.title.toLowerCase().includes(searchQuery))
+    .slice(0, 3);
 
   // Log the filtered recipes to the console
   console.log('Filtered Recipes:', filteredRecipes);
@@ -60,9 +63,7 @@ const Grid: React.FC = () => {
         onChange={handleInputChange}
         placeholder='Search for recipes...'
       />
-      <button onClick={handleSearchClick}>
-        Search
-      </button>
+      <button onClick={handleSearchClick}>Search</button>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       <CharactersGrid characters={filteredRecipes} />

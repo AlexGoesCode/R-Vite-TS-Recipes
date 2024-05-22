@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -6,13 +6,13 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import './Navbar.css';
+import './CustomNavbar.css';
 
 interface NavbarProps {
   onSearch: (query: string) => void;
 }
 
-const NavScrollExample: React.FC<NavbarProps> = ({ onSearch }) => {
+const CustomNavbar = ({ onSearch }: NavbarProps) => {
   const [searchQuery, setSearchQuery] = useState(''); // TypeScript infers the type as string
   // (1.2) State to hold the search query
 
@@ -49,7 +49,7 @@ const NavScrollExample: React.FC<NavbarProps> = ({ onSearch }) => {
             <Nav.Link as={Link} to='search'>
               Search recipes
             </Nav.Link>
-            <NavDropdown title='Link' id='navbarScrollingDropdown'>
+            {/* <NavDropdown title='Link' id='navbarScrollingDropdown'>
               <NavDropdown.Item as={Link} to='/ '>
                 Home
               </NavDropdown.Item>
@@ -60,10 +60,10 @@ const NavScrollExample: React.FC<NavbarProps> = ({ onSearch }) => {
               <NavDropdown.Item as={Link} to='/action5'>
                 Something else here
               </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link as={Link} to='#' disabled>
+            </NavDropdown> */}
+            {/* <Nav.Link as={Link} to='#' disabled>
               Link
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
           <Form
             className='d-flex'
@@ -90,4 +90,4 @@ const NavScrollExample: React.FC<NavbarProps> = ({ onSearch }) => {
   );
 };
 
-export default NavScrollExample;
+export default CustomNavbar;
