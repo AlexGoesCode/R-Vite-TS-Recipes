@@ -30,11 +30,13 @@ const SearchRecipe = () => {
       }
       const data = await response.json();
       setRecipes(data.results);
+      setResultsDisplayed(true);
 
       console.log('data :>> ', data);
     } catch (error) {
       console.log('error :>> ', error);
       setError('Failed to fetch recipes. Please try again.');
+      setResultsDisplayed(false);
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,11 @@ const SearchRecipe = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      className={`search-recipe-container ${
+        resultsDisplayed ? 'dim-background' : ''
+      }`}
+    >
       <input
         type='text'
         value={searchQuery}
