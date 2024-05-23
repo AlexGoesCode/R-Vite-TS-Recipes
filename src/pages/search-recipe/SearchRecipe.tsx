@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_KEY } from '../assets/secret/secret';
+import { API_KEY } from '../../assets/secret/secret';
+import './SearchRecipe.css';
 
 type Recipes = {
   id: number;
@@ -15,6 +16,7 @@ const SearchRecipe = () => {
   const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
   const [loading, setLoading] = useState(false); // State to manage loading
   const [error, setError] = useState<string | null>(null); // State to manage error messages
+  const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
 
   const getRecipes = async (query: string) => {
     setLoading(true);
@@ -40,12 +42,12 @@ const SearchRecipe = () => {
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value); // Update the state with the new query
-  };
+  }; // Handler for input change events
 
   const handleSearchClick = () => {
     if (searchQuery) {
       getRecipes(searchQuery);
-    }
+    } // Handler for search button click events
   };
 
   useEffect(() => {
