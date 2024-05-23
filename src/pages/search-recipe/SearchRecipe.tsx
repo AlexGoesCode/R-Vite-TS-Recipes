@@ -64,10 +64,12 @@ const SearchRecipe = () => {
 
   return (
     <div
-      className={`search-recipe-container ${
-        resultsDisplayed ? 'dim-background' : ''
-      }`}
-      style={{ backgroundImage: `url(${backgroundPic})` }}
+      id='testing'
+      className='searchContainer'
+      // className={`search-recipe-container ${
+      //   resultsDisplayed ? 'dim-background' : ''
+      // }`}
+      // style={{ backgroundImage: `url(${backgroundPic})` }}
     >
       <input
         type='text'

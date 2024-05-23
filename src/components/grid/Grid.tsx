@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Grid.css';
 import { API_KEY } from '../../assets/secret/secret';
-import CharactersGrid from '../CharactersGrid/CharactersGrid';
+import CharactersGrid from '../characters-grid/CharactersGrid';
 
 interface Recipe {
   id: number;
@@ -38,6 +38,8 @@ const Grid = () => {
         }
         const data = await response.json();
         setRecipes(data.results);
+        const root = document.getElementById('root');
+        root?.classList.add('dim');
       } catch (error) {
         console.error('Error fetching recipes:', error);
         setError('Failed to fetch recipes. Please try again.');
@@ -55,8 +57,15 @@ const Grid = () => {
   // Log the filtered recipes to the console
   console.log('Filtered Recipes:', filteredRecipes);
 
+  useEffect(() => {
+    return () => {
+      const root = document.getElementById('root');
+      root?.classList.remove('dim');
+    };
+  }, []);
+
   return (
-    <div>
+    <div className='container'>
       <input
         type='text'
         value={inputValue}

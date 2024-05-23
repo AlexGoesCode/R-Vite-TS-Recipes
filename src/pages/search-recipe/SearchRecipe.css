@@ -9,3 +9,7 @@
   background-color: rgba(0, 0, 0, 0.3); /* Slightly darker overlay */
   filter: brightness(0.8) saturate(0.5); /* Dim and reduce saturation */
 }
+
+.searchContainer {
+  margin-top: 200px;
+}

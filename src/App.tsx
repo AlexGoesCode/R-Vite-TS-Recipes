@@ -9,10 +9,10 @@ import NotFound from './pages/not-found/NotFound';
 const App = () => {
   return (
     <Router>
+      <CustomNavbar
+        onSearch={(query) => console.log('Searching for:', query)}
+      />
       <div className='app'>
-        <CustomNavbar
-          onSearch={(query) => console.log('Searching for:', query)}
-        />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='recipes' element={<Grid />} />
