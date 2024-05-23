@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API_KEY } from '../../assets/secret/secret';
 import './SearchRecipe.css';
+import backgroundPic from '../../assets/pictures/background_pic.jpg';
 
 type Recipes = {
   id: number;
@@ -33,10 +34,12 @@ const SearchRecipe = () => {
       setResultsDisplayed(true);
 
       console.log('data :>> ', data);
+      console.log('resultsDisplayed set to true');
     } catch (error) {
       console.log('error :>> ', error);
       setError('Failed to fetch recipes. Please try again.');
       setResultsDisplayed(false);
+      console.log('resultsDisplayed set to false');
     } finally {
       setLoading(false);
     }
@@ -57,11 +60,14 @@ const SearchRecipe = () => {
     getRecipes('');
   }, []);
 
+  console.log('resultsDisplayed:', resultsDisplayed);
+
   return (
     <div
       className={`search-recipe-container ${
         resultsDisplayed ? 'dim-background' : ''
       }`}
+      style={{ backgroundImage: `url(${backgroundPic})` }}
     >
       <input
         type='text'

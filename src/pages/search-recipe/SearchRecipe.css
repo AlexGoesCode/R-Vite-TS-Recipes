@@ -1,5 +1,6 @@
 .search-recipe-container {
-  background: url('/path/to/your/background.jpg') no-repeat center center fixed;
+  background: url('/Users/alex/react-app/R-Vite-TS-Recipes/src/assets/pictures/background_pic.jpg')
+    no-repeat center center fixed;
   background-size: cover;
   transition: background-color 2s ease, filter 2s ease;
 }

@@ -3,7 +3,7 @@ import SearchRecipe from './pages/search-recipe/SearchRecipe';
 import CustomNavbar from './components/navbar/CustomNavbar';
 import Grid from './components/grid/Grid';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
+import Home from './pages/home/Home';
 import NotFound from './pages/not-found/NotFound';
 
 const App = () => {
