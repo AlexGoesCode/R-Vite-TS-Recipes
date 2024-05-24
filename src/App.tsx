@@ -7,13 +7,12 @@ import Home from './pages/home/Home';
 import NotFound from './pages/not-found/NotFound';
 import Login from './pages/login/Login';
 import Logout from './pages/logout/Logout';
+import SignUp from './pages/sign-up/SignUp';
 
 const App = () => {
   return (
     <Router>
-      <CustomNavbar
-        onSearch={(query) => console.log('Searching for:', query)}
-      />
+      <CustomNavbar />
       <div className='app'>
         <Routes>
           <Route path='/' element={<Home />} />
@@ -21,6 +20,7 @@ const App = () => {
           <Route path='search' element={<SearchRecipe />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
+          <Route path='/signup' element={<SignUp />} />
         </Routes>
       </div>
     </Router>

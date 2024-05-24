@@ -1,29 +1,19 @@
-// import { useState } from 'react';
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-import { useAppContext } from '../../context/AppContext';
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../../context/AppContext';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import ButtonLink from '../button-link/ButtonLink'; // Import the custom ButtonLink component
 import './CustomNavbar.css';
-
-// interface NavbarProps {
-//   onSearch: (query: string) => void;
-// }
 
 const CustomNavbar = () => {
   const { user, setUser } = useAppContext();
 
-  const handleLogin = () => {
-    setUser('John Doe'); // Example user login
-  };
-
   const handleLogout = () => {
     setUser(null);
   };
-  // Bootstrap Navbar
+
   return (
     <Navbar expand='lg' className='navbar'>
       <Container fluid>
@@ -40,7 +30,7 @@ const CustomNavbar = () => {
             <Nav.Link as={Link} to='/'>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to='recipes'>
+            <Nav.Link as={Link} to='/recipes'>
               Recipes
             </Nav.Link>
           </Nav>
@@ -48,14 +38,27 @@ const CustomNavbar = () => {
             {user ? (
               <>
                 <span className='me-2'>Welcome, {user}</span>
-                <Button variant='outline-danger' onClick={handleLogout}>
+                <Button
+                  variant='outline-danger'
+                  onClick={handleLogout}
+                  className='me-2'
+                >
                   Logout
                 </Button>
               </>
             ) : (
-              <Button variant='outline-success' onClick={handleLogin}>
-                Login
-              </Button>
+              <>
+                <ButtonLink
+                  variant='outline-success'
+                  to='/login'
+                  className='me-2'
+                >
+                  Login
+                </ButtonLink>
+                <ButtonLink variant='outline-primary' to='/signup'>
+                  Sign Up
+                </ButtonLink>
+              </>
             )}
           </div>
         </Navbar.Collapse>
