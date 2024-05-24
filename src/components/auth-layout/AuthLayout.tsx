@@ -1,4 +1,5 @@
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import './AuthLayout.css';
 
 interface AuthLayoutProps {
   title: string;
@@ -14,18 +15,12 @@ const AuthLayout = ({
   children,
 }: AuthLayoutProps) => {
   return (
-    <Container
-      className='d-flex justify-content-center align-items-center'
-      style={{ height: '100vh' }}
-    >
-      <Row className='w-100'>
-        <Col
-          md={{ span: 6, offset: 3 }}
-          className='p-4 border rounded shadow-sm bg-white'
-        >
+    <Container className='auth-layout-container'>
+      <Row className='auth-layout-row'>
+        <Col className='auth-layout-col'>
           <h2 className='text-center mb-4'>{title}</h2>
           {children}
-          <div className='d-grid gap-2'>
+          <div className='d-grid gap-2 mt-3'>
             <Button variant='primary' size='lg' onClick={onButtonClick}>
               {buttonText}
             </Button>

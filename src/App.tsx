@@ -4,10 +4,11 @@ import CustomNavbar from './components/navbar/CustomNavbar';
 import Grid from './components/grid/Grid';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/home/Home';
-import NotFound from './pages/not-found/NotFound';
 import Login from './pages/login/Login';
 import Logout from './pages/logout/Logout';
 import SignUp from './pages/sign-up/SignUp';
+import NotFound from './pages/not-found/NotFound';
+import { AppProvider } from './context/AppContext';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
     </Router>

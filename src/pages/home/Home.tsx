@@ -1,5 +1,6 @@
 import { useAppContext } from '../../context/AppContext';
 
+// consume the context
 const Home = () => {
   const { user } = useAppContext();
 
