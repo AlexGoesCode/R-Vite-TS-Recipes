@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
 
   const handleSignUp = () => {
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
     // Handle sign-up logic
     console.log('Signing up...', { username, password, email });
   };
@@ -22,6 +27,7 @@ const SignUp = () => {
           className='p-4 border rounded shadow-sm bg-white'
         >
           <h2 className='text-center mb-4'>Sign Up</h2>
+          {error && <p className='text-danger'>{error}</p>}
           <Form>
             <Form.Group className='mb-3' controlId='formEmail'>
               <Form.Label>Email</Form.Label>

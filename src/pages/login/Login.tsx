@@ -4,8 +4,13 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = () => {
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
     // Handle login logic
     console.log('Logging in...', { username, password });
   };
@@ -21,6 +26,7 @@ const Login = () => {
           className='p-4 border rounded shadow-sm bg-white'
         >
           <h2 className='text-center mb-4'>Login</h2>
+          {error && <p className='text-danger'>{error}</p>}
           <Form>
             <Form.Group className='mb-3' controlId='formUsername'>
               <Form.Label>Username</Form.Label>
