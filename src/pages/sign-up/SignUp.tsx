@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { useAppContext } from '../../context/AppContext';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const { setUser } = useAppContext();
 
   const handleSignUp = () => {
     if (password.length < 6) {
@@ -13,6 +15,7 @@ const SignUp = () => {
       return;
     }
     // Handle sign-up logic
+    setUser(username); // Simulate successful sign-up by setting the user
     console.log('Signing up...', { username, password, email });
   };
 
