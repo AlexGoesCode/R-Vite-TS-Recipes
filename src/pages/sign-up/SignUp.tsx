@@ -45,7 +45,7 @@ const SignUp = () => {
           {error && <p className='text-danger'>{error}</p>}
           <Form>
             <Form.Group className='mb-3' controlId='formEmail'>
-              <Form.Label>Email</Form.Label>
+              <Form.Label>E-mail</Form.Label>
               <Form.Control
                 type='email'
                 placeholder='Enter email'
