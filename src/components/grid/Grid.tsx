@@ -3,11 +3,14 @@ import './Grid.css';
 import { API_KEY } from '../../assets/secret/secret';
 import CharactersGrid from '../characters-grid/CharactersGrid';
 
-interface Recipe {
+type Recipe = {
   id: number;
-  title: string;
+  cuisine: string;
+  diet: string;
+  name: string;
   image: string;
-}
+  type: string;
+};
 
 const Grid = () => {
   const [inputValue, setInputValue] = useState(''); // Manage the input value
