@@ -1,0 +1,53 @@
+/* General container styles */
+.container {
+  padding: 20px;
+}
+
+/* Background dimming effect */
+.dim-background {
+  background-color: rgba(0, 0, 0, 0.3); /* Slightly darker overlay */
+  filter: brightness(0.8) saturate(0.5); /* Dim and reduce saturation */
+  transition: background-color 2s ease, filter 2s ease;
+}
+
+/* Grid styles */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Tablet and above */
+@media (min-width: 480px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop and above */
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Search container styles */
+.search-recipe-container {
+  background: url('/Users/alex/react-app/R-Vite-TS-Recipes/src/assets/pictures/background_pic.jpg')
+    no-repeat center center fixed;
+  background-size: cover;
+  transition: background-color 2s ease, filter 2s ease;
+}
+
+.searchContainer {
+  margin-top: 200px;
+}
