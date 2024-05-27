@@ -27,7 +27,7 @@ const Recipes = () => {
     setError(null);
     try {
       const response = await fetch(
-        `${API_URL}?apiKey=${API_KEY}&query=${query}&number=10`
+        `${API_URL}?apiKey=${API_KEY}&query=${query}&number=3`
       );
       if (!response.ok) {
         throw new Error('Network response was not ok');
