@@ -1,16 +1,5 @@
-/* General container styles */
-.container {
-  padding: 20px;
-}
+/* mobile first style */
 
-/* Background dimming effect */
-.dim-background {
-  background-color: rgba(0, 0, 0, 0.3); /* Slightly darker overlay */
-  filter: brightness(0.8) saturate(0.5); /* Dim and reduce saturation */
-  transition: background-color 2s ease, filter 2s ease;
-}
-
-/* Grid styles */
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -38,16 +27,4 @@
   .grid-container {
     grid-template-columns: repeat(4, 1fr);
   }
-}
-
-/* Search container styles */
-.search-recipe-container {
-  background: url('/Users/alex/react-app/R-Vite-TS-Recipes/src/assets/pictures/background_pic.jpg')
-    no-repeat center center fixed;
-  background-size: cover;
-  transition: background-color 2s ease, filter 2s ease;
-}
-
-.searchContainer {
-  margin-top: 200px;
 }
