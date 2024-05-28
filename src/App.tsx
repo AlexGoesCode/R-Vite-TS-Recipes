@@ -6,18 +6,22 @@ import Login from './pages/login/Login';
 import Logout from './pages/logout/Logout';
 import SignUp from './pages/sign-up/SignUp';
 import NotFound from './pages/not-found/NotFound';
-import { AppProvider } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import Recipes from './pages/recipes/Recipes';
+import ProtectedRoute from './components/protected-route/ProtectedRoute';
 
 const App = () => {
   return (
-    <AppProvider>
+    <AuthProvider>
       <Router>
         <CustomNavbar />
         <div className='app'>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='recipes' element={<Recipes />} />
+            <Route
+              path='recipes'
+              element={<ProtectedRoute component={Recipes} />}
+            />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/signup' element={<SignUp />} />
@@ -25,7 +29,7 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-    </AppProvider>
+    </AuthProvider>
   );
 };
 
