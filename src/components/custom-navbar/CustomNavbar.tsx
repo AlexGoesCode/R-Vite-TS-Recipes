@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/AuthContext';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';

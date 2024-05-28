@@ -1,4 +1,4 @@
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/AuthContext';
 
 // consume the context
 const Home = () => {

@@ -19,6 +19,7 @@ const Grid = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]); // Manage the fetched recipes
   const [loading, setLoading] = useState(false); // Manage loading state
   const [error, setError] = useState<string | null>(null); // Manage error state
+  const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
 
   const API_URL = `https://api.spoonacular.com/recipes/complexSearch`;
 
@@ -42,11 +43,13 @@ const Grid = () => {
         }
         const data = await response.json();
         setRecipes(data.results);
+        setResultsDisplayed(true);
         const root = document.getElementById('root');
         root?.classList.add('dim');
       } catch (error) {
         console.error('Error fetching recipes:', error);
         setError('Failed to fetch recipes. Please try again.');
+        setResultsDisplayed(false);
       } finally {
         setLoading(false);
       }
@@ -70,16 +73,27 @@ const Grid = () => {
 
   return (
     <div className='container'>
+      <div
+        className={`container searchContainer ${
+          resultsDisplayed ? 'results-displayed' : ''
+        }`}
+      ></div>
       <input
         type='text'
         value={inputValue}
         onChange={handleInputChange}
         placeholder='Search for recipes...'
       />
-      <button onClick={handleSearchClick}>Search</button>
+      <button className='searchButton' onClick={handleSearchClick}>
+        Search
+      </button>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <CharactersGrid characters={filteredRecipes} />
+      {resultsDisplayed && (
+        <div className='grid-container'>
+          <CharactersGrid characters={filteredRecipes} />
+        </div>
+      )}
     </div>
   );
 };

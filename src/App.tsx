@@ -6,7 +6,7 @@ import Login from './pages/login/Login';
 import Logout from './pages/logout/Logout';
 import SignUp from './pages/sign-up/SignUp';
 import NotFound from './pages/not-found/NotFound';
-import { AppProvider } from './context/AppContext';
+import { AppProvider } from './context/AuthContext';
 import Recipes from './pages/recipes/Recipes';
 
 const App = () => {
