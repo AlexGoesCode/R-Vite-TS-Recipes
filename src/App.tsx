@@ -1,6 +1,6 @@
 import './App.css';
 import CustomNavbar from './components/custom-navbar/CustomNavbar';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Logout from './pages/logout/Logout';
@@ -18,13 +18,10 @@ const App = () => {
         <div className='app'>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route
-              path='recipes'
-              element={<ProtectedRoute component={Recipes} />}
-            />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/signup' element={<SignUp />} />
+            <ProtectedRoute path='/recipes' element={Recipes} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
