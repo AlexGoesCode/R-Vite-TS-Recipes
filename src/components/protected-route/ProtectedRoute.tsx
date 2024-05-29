@@ -1,29 +1,19 @@
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 interface ProtectedRouteProps {
-  element: React.ComponentType<any>;
-  path: string;
-  [key: string]: any; // This allows passing any additional props
+  children: React.ReactNode;
 }
 
-const ProtectedRoute = ({
-  element: Component,
-  path,
-  ...rest
-}: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user } = useAuth();
 
-  return (
-    <Route
-      path={path}
-      {...rest}
-      element={
-        user ? <Component {...rest} /> : <Navigate to='/login' replace />
-      }
-    />
-  );
+  if (!user) {
+    return <Navigate to='/login' replace />;
+  }
+
+  return children ? <>{children}</> : <Outlet />;
 };
 
 export default ProtectedRoute;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { useAppContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 
@@ -9,7 +9,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const { setUser } = useAppContext();
+  const { setUser } = useAuth();
 
   const handleSignUp = async () => {
     if (password.length < 6) {

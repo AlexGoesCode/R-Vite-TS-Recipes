@@ -1,8 +1,8 @@
-import { useAppContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 // consume the context
 const Home = () => {
-  const { user } = useAppContext();
+  const { user } = useAuth();
 
   return (
     <div>
