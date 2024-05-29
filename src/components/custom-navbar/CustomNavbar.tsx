@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Import the missing useAuthContext function
+import { useAuth } from '../../context/AuthContext'; // Import the missing useAuth function
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -33,6 +33,11 @@ const CustomNavbar = () => {
             <Nav.Link as={Link} to='/recipes'>
               Recipes
             </Nav.Link>
+            {user && (
+              <Nav.Link as={Link} to='/create-recipe'>
+                Create Recipe
+              </Nav.Link>
+            )}
           </Nav>
           <div className='d-flex align-items-center'>
             {user ? (

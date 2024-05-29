@@ -5,6 +5,7 @@ import Logout from '../../pages/logout/Logout';
 import SignUp from '../../pages/sign-up/SignUp';
 import NotFound from '../../pages/not-found/NotFound';
 import Recipes from '../../pages/recipes/Recipes';
+import CreateRecipe from '../../pages/create-recipe/CreateRecipe';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
 
 const Routes = () => {
@@ -19,6 +20,14 @@ const Routes = () => {
         element={
           <ProtectedRoute>
             <Recipes />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/create-recipe'
+        element={
+          <ProtectedRoute>
+            <CreateRecipe />
           </ProtectedRoute>
         }
       />
