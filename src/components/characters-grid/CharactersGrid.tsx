@@ -1,7 +1,7 @@
 import './CharactersGrid.css';
 
 interface Character {
-  id: number;
+  id: string;
   title: string;
   image: string;
 }
