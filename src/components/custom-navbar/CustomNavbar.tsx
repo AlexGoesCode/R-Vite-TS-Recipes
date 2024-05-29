@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext'; // Import the missing useAuthContext function
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,7 +8,7 @@ import ButtonLink from '../custom-link/ButtonLink'; // Import the custom ButtonL
 import './CustomNavbar.css';
 
 const CustomNavbar = () => {
-  const { user, setUser } = useAppContext();
+  const { user, setUser } = useAuth();
 
   const handleLogout = () => {
     setUser(null);
