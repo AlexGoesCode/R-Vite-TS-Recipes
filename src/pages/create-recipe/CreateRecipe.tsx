@@ -1,7 +1,21 @@
-import { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import './CreateRecipe.css';
+import CharactersGrid from '../../components/characters-grid/CharactersGrid';
+
+type Recipe = {
+  id: string;
+  title: string;
+  cuisine?: string;
+  diet?: string;
+  name: string;
+  image: string;
+  type?: string;
+  ingredients: string[];
+  instructions: string;
+  author: string;
+};
 
 const CreateRecipe = () => {
   const [title, setTitle] = useState('');
@@ -9,6 +23,7 @@ const CreateRecipe = () => {
   const [instructions, setInstructions] = useState('');
   const [image, setImage] = useState('');
   const [author, setAuthor] = useState('');
+  const [createdRecipes, setCreatedRecipes] = useState<Recipe[]>([]); // Manage created recipes
 
   const handleAddRecipe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,16 +41,35 @@ const CreateRecipe = () => {
       setInstructions('');
       setImage('');
       setAuthor('');
+      fetchCreatedRecipes(); // Fetch updated list of created recipes
       alert('Recipe added successfully!');
     } catch (err) {
       console.error('Error adding document: ', err);
     }
   };
 
+  const fetchCreatedRecipes = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'recipes'));
+      const recipesList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Recipe[];
+      setCreatedRecipes(recipesList);
+      console.log('Fetched Created Recipes:', recipesList);
+    } catch (err) {
+      console.error('Error fetching created recipes:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCreatedRecipes();
+  }, []);
+
   return (
-    <div className='create-recipe-container'>
-      <h2>Create Recipe</h2>
+    <div className='container'>
       <form onSubmit={handleAddRecipe} className='add-recipe-form'>
+        <h2>Create a New Recipe</h2>
         <input
           type='text'
           placeholder='Title'
@@ -68,6 +102,10 @@ const CreateRecipe = () => {
         />
         <button type='submit'>Add Recipe</button>
       </form>
+
+      <div className='grid-container'>
+        <CharactersGrid characters={createdRecipes} />
+      </div>
     </div>
   );
 };

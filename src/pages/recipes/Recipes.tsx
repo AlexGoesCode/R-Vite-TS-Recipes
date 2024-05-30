@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Recipes.css';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
-import { db } from '../../../firebaseConfig';
-import CharactersGrid from '../../components/characters-grid/CharactersGrid';
 import { API_KEY } from '../../assets/secret/secret';
+import CharactersGrid from '../../components/characters-grid/CharactersGrid';
 
 type Recipe = {
   id: string;
@@ -13,9 +11,6 @@ type Recipe = {
   name: string;
   image: string;
   type?: string;
-  ingredients: string[];
-  instructions: string;
-  author: string;
 };
 
 const Recipes = () => {
@@ -26,30 +21,8 @@ const Recipes = () => {
   const [error, setError] = useState<string | null>(null); // Manage error state
   const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
 
-  // Form states
-  // const [title, setTitle] = useState('');
-  // const [ingredients, setIngredients] = useState('');
-  // const [instructions, setInstructions] = useState('');
-  // const [image, setImage] = useState('');
-  // const [author, setAuthor] = useState('');
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.trim().toLowerCase());
-  };
-
-  const fetchRecipesFromFirestore = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'recipes'));
-      const recipesList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Recipe[];
-      return recipesList;
-    } catch (err) {
-      console.error('Error fetching recipes from Firestore:', err);
-      setError('Failed to fetch recipes. Please try again.');
-      return [];
-    }
   };
 
   const fetchRecipesFromAPI = async (query: string) => {
@@ -70,9 +43,6 @@ const Recipes = () => {
         name: recipe.name,
         image: recipe.image,
         type: recipe.type,
-        ingredients: [],
-        instructions: '',
-        author: '',
       }));
     } catch (err) {
       console.error('Error fetching recipes from API:', err);
@@ -85,14 +55,10 @@ const Recipes = () => {
     setLoading(true);
     setError(null);
     try {
-      const [firestoreRecipes, apiRecipes] = await Promise.all([
-        fetchRecipesFromFirestore(),
-        fetchRecipesFromAPI(query),
-      ]);
-      const combinedRecipes = [...firestoreRecipes, ...apiRecipes];
-      setRecipes(combinedRecipes);
+      const apiRecipes = await fetchRecipesFromAPI(query);
+      setRecipes(apiRecipes);
       setResultsDisplayed(true);
-      console.log('Fetched Recipes:', combinedRecipes);
+      console.log('Fetched Recipes:', apiRecipes);
     } catch (err) {
       console.error('Error fetching recipes:', err);
       setError('Failed to fetch recipes. Please try again.');
