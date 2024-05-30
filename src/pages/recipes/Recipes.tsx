@@ -11,6 +11,9 @@ type Recipe = {
   name: string;
   image: string;
   type?: string;
+  ingredients: string[];
+  instructions: string;
+  author: string;
 };
 
 const Recipes = () => {
@@ -43,6 +46,9 @@ const Recipes = () => {
         name: recipe.name,
         image: recipe.image,
         type: recipe.type,
+        ingredients: [],
+        instructions: '',
+        author: '',
       }));
     } catch (err) {
       console.error('Error fetching recipes from API:', err);
@@ -58,6 +64,8 @@ const Recipes = () => {
       const apiRecipes = await fetchRecipesFromAPI(query);
       setRecipes(apiRecipes);
       setResultsDisplayed(true);
+      const root = document.getElementById('root');
+      root?.classList.add('dim');
       console.log('Fetched Recipes:', apiRecipes);
     } catch (err) {
       console.error('Error fetching recipes:', err);
@@ -76,7 +84,10 @@ const Recipes = () => {
   };
 
   useEffect(() => {
-    fetchRecipes('');
+    return () => {
+      const root = document.getElementById('root');
+      root?.classList.remove('dim');
+    };
   }, []);
 
   return (

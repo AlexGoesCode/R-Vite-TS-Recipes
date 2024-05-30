@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   height: 90vh;
   padding: 20px;
   box-sizing: border-box; /* Include padding in height calculation */
@@ -36,8 +36,13 @@
 }
 
 .container.results-displayed {
-  /* height: auto; */
+  height: auto;
   margin-top: 100px; /* Adjust to fit under the navbar */
+}
+
+.container.dim-background {
+  background-color: rgba(0, 0, 0, 0.3); /* Slightly darker overlay */
+  filter: brightness(0.8) saturate(0.5); /* Dim and reduce saturation */
 }
 
 .container input,

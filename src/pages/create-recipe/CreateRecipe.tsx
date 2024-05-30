@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import './CreateRecipe.css';
-import CharactersGrid from '../../components/characters-grid/CharactersGrid';
 
 type Recipe = {
   id: string;
@@ -24,27 +29,44 @@ const CreateRecipe = () => {
   const [image, setImage] = useState('');
   const [author, setAuthor] = useState('');
   const [createdRecipes, setCreatedRecipes] = useState<Recipe[]>([]); // Manage created recipes
+  const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null); // Manage the recipe being edited
+  const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
 
   const handleAddRecipe = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await addDoc(collection(db, 'recipes'), {
-        title,
-        ingredients: ingredients.split(','),
-        instructions,
-        image,
-        author,
-      });
+      if (editingRecipe) {
+        await updateDoc(doc(db, 'recipes', editingRecipe.id), {
+          title,
+          ingredients: ingredients.split(','),
+          instructions,
+          image,
+          author,
+        });
+        alert('Recipe updated successfully!');
+        setEditingRecipe(null);
+      } else {
+        await addDoc(collection(db, 'recipes'), {
+          title,
+          ingredients: ingredients.split(','),
+          instructions,
+          image,
+          author,
+        });
+        alert('Recipe added successfully!');
+      }
       setTitle('');
       setIngredients('');
       setInstructions('');
       setImage('');
       setAuthor('');
       fetchCreatedRecipes(); // Fetch updated list of created recipes
-      alert('Recipe added successfully!');
+      setResultsDisplayed(true); // Display results
+      const root = document.getElementById('root');
+      root?.classList.add('dim');
     } catch (err) {
-      console.error('Error adding document: ', err);
+      console.error('Error adding/updating document: ', err);
     }
   };
 
@@ -62,14 +84,27 @@ const CreateRecipe = () => {
     }
   };
 
+  const handleEditRecipe = (recipe: Recipe) => {
+    setTitle(recipe.title);
+    setIngredients(recipe.ingredients.join(','));
+    setInstructions(recipe.instructions);
+    setImage(recipe.image);
+    setAuthor(recipe.author);
+    setEditingRecipe(recipe);
+  };
+
   useEffect(() => {
     fetchCreatedRecipes();
+    return () => {
+      const root = document.getElementById('root');
+      root?.classList.remove('dim');
+    };
   }, []);
 
   return (
     <div className='container'>
+      <h2>Create Recipe</h2>
       <form onSubmit={handleAddRecipe} className='add-recipe-form'>
-        <h2>Create a New Recipe</h2>
         <input
           type='text'
           placeholder='Title'
@@ -102,10 +137,18 @@ const CreateRecipe = () => {
         />
         <button type='submit'>Add Recipe</button>
       </form>
-
-      <div className='grid-container'>
-        <CharactersGrid characters={createdRecipes} />
-      </div>
+      {resultsDisplayed && (
+        <div className='grid-container'>
+          {createdRecipes.map((recipe) => (
+            <div key={recipe.id} className='grid-item'>
+              <h3>{recipe.title}</h3>
+              <p>{recipe.instructions}</p>
+              <img src={recipe.image} alt={recipe.title} width='100' />
+              <button onClick={() => handleEditRecipe(recipe)}>Edit</button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

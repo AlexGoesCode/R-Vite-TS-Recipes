@@ -1,19 +1,41 @@
+/* shared styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in height calculation */
+  transition: all 1s ease; /* Smooth transition */
+}
+
+.container.results-displayed {
+  height: auto;
+  margin-top: 100px; /* Adjust to fit under the navbar */
+}
+
+.container.dim-background {
+  background-color: rgba(0, 0, 0, 0.3); /* Slightly darker overlay */
+  filter: brightness(0.8) saturate(0.5); /* Dim and reduce saturation */
+}
+
+/* the rest */
 .create-recipe-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-  }
-  
-  .add-recipe-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .add-recipe-form input,
-  .add-recipe-form button {
-    padding: 10px;
-    width: 300px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.add-recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-recipe-form input,
+.add-recipe-form button {
+  padding: 10px;
+  width: 300px;
+}
