@@ -5,6 +5,7 @@ import {
   getDocs,
   doc,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import './CreateRecipe.css';
@@ -93,6 +94,16 @@ const CreateRecipe = () => {
     setEditingRecipe(recipe);
   };
 
+  const handleDeleteRecipe = async (recipeId: string) => {
+    try {
+      await deleteDoc(doc(db, 'recipes', recipeId));
+      alert('Recipe deleted successfully!');
+      fetchCreatedRecipes(); // Fetch updated list of created recipes
+    } catch (err) {
+      console.error('Error deleting document: ', err);
+    }
+  };
+
   useEffect(() => {
     fetchCreatedRecipes();
     return () => {
@@ -145,6 +156,9 @@ const CreateRecipe = () => {
               <p>{recipe.instructions}</p>
               <img src={recipe.image} alt={recipe.title} width='100' />
               <button onClick={() => handleEditRecipe(recipe)}>Edit</button>
+              <button onClick={() => handleDeleteRecipe(recipe.id)}>
+                Delete
+              </button>
             </div>
           ))}
         </div>
