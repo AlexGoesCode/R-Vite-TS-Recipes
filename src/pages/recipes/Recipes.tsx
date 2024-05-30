@@ -26,16 +26,25 @@ const Recipes = () => {
   const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
   const [currentPage, setCurrentPage] = useState(1); // Manage current page
   const [totalPages, setTotalPages] = useState(1); // Manage total pages
+  const [selectedDiet, setSelectedDiet] = useState(''); // Manage selected diet
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.trim().toLowerCase());
   };
 
-  const fetchRecipesFromAPI = async (query: string, page: number = 1) => {
+  const handleDietChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDiet(event.target.value);
+  };
+
+  const fetchRecipesFromAPI = async (
+    query: string,
+    diet: string,
+    page: number = 1
+  ) => {
     const API_URL = `https://api.spoonacular.com/recipes/complexSearch`;
     try {
       const response = await fetch(
-        `${API_URL}?apiKey=${API_KEY}&query=${query}&number=3&offset=${
+        `${API_URL}?apiKey=${API_KEY}&query=${query}&diet=${diet}&number=3&offset=${
           (page - 1) * 3
         }`
       );
@@ -67,7 +76,7 @@ const Recipes = () => {
     setLoading(true);
     setError(null);
     try {
-      const apiRecipes = await fetchRecipesFromAPI(query, page);
+      const apiRecipes = await fetchRecipesFromAPI(query, selectedDiet, page);
       setRecipes(apiRecipes);
       setResultsDisplayed(true);
       const root = document.getElementById('root');
@@ -145,6 +154,21 @@ const Recipes = () => {
           resultsDisplayed ? 'results-displayed' : ''
         }`}
       ></div>
+      <select
+        className='filterSelect'
+        value={selectedDiet}
+        onChange={handleDietChange}
+      >
+        <option value=''>All Diets</option>
+        <option value='gluten free'>Gluten Free</option>
+        <option value='ketogenic'>Ketogenic</option>
+        <option value='vegetarian'>Vegetarian</option>
+        <option value='vegan'>Vegan</option>
+        <option value='pescatarian'>Pescatarian</option>
+        <option value='paleo'>Paleo</option>
+        <option value='primal'>Primal</option>
+        <option value='whole30'>Whole30</option>
+      </select>
       <input
         className='searchInput'
         type='text'
