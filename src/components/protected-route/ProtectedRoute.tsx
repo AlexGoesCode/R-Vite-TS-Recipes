@@ -1,4 +1,4 @@
-import React from 'react';
+// Desc: ProtectedRoute component to protect routes from unauthorized access.
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 

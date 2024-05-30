@@ -1,3 +1,4 @@
+// Define the AuthContext, AuthProvider and useAuth hook
 import { createContext, useState, ReactNode, useContext } from 'react';
 
 // Define the shape of the context state

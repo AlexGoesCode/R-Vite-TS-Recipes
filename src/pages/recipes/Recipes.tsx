@@ -27,11 +27,11 @@ const Recipes = () => {
   const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
 
   // Form states
-  const [title, setTitle] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
-  const [image, setImage] = useState('');
-  const [author, setAuthor] = useState('');
+  // const [title, setTitle] = useState('');
+  // const [ingredients, setIngredients] = useState('');
+  // const [instructions, setInstructions] = useState('');
+  // const [image, setImage] = useState('');
+  // const [author, setAuthor] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.trim().toLowerCase());
@@ -109,28 +109,6 @@ const Recipes = () => {
     }
   };
 
-  const handleAddRecipe = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      await addDoc(collection(db, 'recipes'), {
-        title,
-        ingredients: ingredients.split(','),
-        instructions,
-        image,
-        author,
-      });
-      setTitle('');
-      setIngredients('');
-      setInstructions('');
-      setImage('');
-      setAuthor('');
-      fetchRecipes(''); // Fetch updated list of recipes
-    } catch (err) {
-      console.error('Error adding document: ', err);
-    }
-  };
-
   useEffect(() => {
     fetchRecipes('');
   }, []);
@@ -158,40 +136,6 @@ const Recipes = () => {
           <CharactersGrid characters={recipes} />
         </div>
       )}
-
-      <form onSubmit={handleAddRecipe} className='add-recipe-form'>
-        <input
-          type='text'
-          placeholder='Title'
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Ingredients (comma separated)'
-          value={ingredients}
-          onChange={(e) => setIngredients(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Instructions'
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Image URL'
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Author'
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-        <button type='submit'>Add Recipe</button>
-      </form>
     </div>
   );
 };

@@ -47,7 +47,7 @@ const Login = () => {
               <Form.Label>E-mail</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Enter username'
+                placeholder='e-mail'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -56,7 +56,7 @@ const Login = () => {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type='password'
-                placeholder='Enter password'
+                placeholder='min. 6 characters'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
