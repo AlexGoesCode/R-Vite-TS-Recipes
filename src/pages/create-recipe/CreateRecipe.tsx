@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import {
-  collection,
   addDoc,
+  collection,
   getDocs,
-  doc,
-  updateDoc,
   deleteDoc,
+  doc,
 } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import './CreateRecipe.css';
@@ -13,13 +12,9 @@ import './CreateRecipe.css';
 type Recipe = {
   id: string;
   title: string;
-  cuisine?: string;
-  diet?: string;
-  name: string;
-  image: string;
-  type?: string;
   ingredients: string[];
   instructions: string;
+  image: string;
   author: string;
 };
 
@@ -29,91 +24,61 @@ const CreateRecipe = () => {
   const [instructions, setInstructions] = useState('');
   const [image, setImage] = useState('');
   const [author, setAuthor] = useState('');
-  const [createdRecipes, setCreatedRecipes] = useState<Recipe[]>([]); // Manage created recipes
-  const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null); // Manage the recipe being edited
-  const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
-  const handleAddRecipe = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      if (editingRecipe) {
-        await updateDoc(doc(db, 'recipes', editingRecipe.id), {
-          title,
-          ingredients: ingredients.split(','),
-          instructions,
-          image,
-          author,
-        });
-        alert('Recipe updated successfully!');
-        setEditingRecipe(null);
-      } else {
-        await addDoc(collection(db, 'recipes'), {
-          title,
-          ingredients: ingredients.split(','),
-          instructions,
-          image,
-          author,
-        });
-        alert('Recipe added successfully!');
-      }
-      setTitle('');
-      setIngredients('');
-      setInstructions('');
-      setImage('');
-      setAuthor('');
-      fetchCreatedRecipes(); // Fetch updated list of created recipes
-      setResultsDisplayed(true); // Display results
-      const root = document.getElementById('root');
-      root?.classList.add('dim');
-    } catch (err) {
-      console.error('Error adding/updating document: ', err);
-    }
-  };
-
-  const fetchCreatedRecipes = async () => {
+  // Function to fetch recipes from Firestore
+  const fetchRecipes = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, 'recipes'));
       const recipesList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Recipe[];
-      setCreatedRecipes(recipesList);
-      console.log('Fetched Created Recipes:', recipesList);
+      setRecipes(recipesList);
     } catch (err) {
-      console.error('Error fetching created recipes:', err);
+      console.error('Error fetching recipes: ', err);
     }
   };
 
-  const handleEditRecipe = (recipe: Recipe) => {
-    setTitle(recipe.title);
-    setIngredients(recipe.ingredients.join(','));
-    setInstructions(recipe.instructions);
-    setImage(recipe.image);
-    setAuthor(recipe.author);
-    setEditingRecipe(recipe);
+  const handleAddRecipe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, 'recipes'), {
+        title,
+        ingredients: ingredients.split(','),
+        instructions,
+        image,
+        author,
+      });
+      setTitle('');
+      setIngredients('');
+      setInstructions('');
+      setImage('');
+      setAuthor('');
+      fetchRecipes(); // Fetch updated list of recipes after adding a new one
+      alert('Recipe added successfully!');
+    } catch (err) {
+      console.error('Error adding document: ', err);
+    }
   };
 
-  const handleDeleteRecipe = async (recipeId: string) => {
+  const handleDeleteRecipe = async (id: string) => {
     try {
-      await deleteDoc(doc(db, 'recipes', recipeId));
+      await deleteDoc(doc(db, 'recipes', id));
+      fetchRecipes(); // Fetch updated list of recipes after deleting one
       alert('Recipe deleted successfully!');
-      fetchCreatedRecipes(); // Fetch updated list of created recipes
     } catch (err) {
       console.error('Error deleting document: ', err);
     }
   };
 
   useEffect(() => {
-    fetchCreatedRecipes();
-    return () => {
-      const root = document.getElementById('root');
-      root?.classList.remove('dim');
-    };
+    fetchRecipes(); // Fetch recipes on component mount
   }, []);
 
   return (
-    <div className='container'>
+    <div className='create-recipe-container'>
       <h2>Create Recipe</h2>
       <form onSubmit={handleAddRecipe} className='add-recipe-form'>
         <input
@@ -148,21 +113,19 @@ const CreateRecipe = () => {
         />
         <button type='submit'>Add Recipe</button>
       </form>
-      {resultsDisplayed && (
-        <div className='grid-container'>
-          {createdRecipes.map((recipe) => (
-            <div key={recipe.id} className='grid-item'>
-              <h3>{recipe.title}</h3>
-              <p>{recipe.instructions}</p>
-              <img src={recipe.image} alt={recipe.title} width='100' />
-              <button onClick={() => handleEditRecipe(recipe)}>Edit</button>
-              <button onClick={() => handleDeleteRecipe(recipe.id)}>
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+
+      <div className='grid-container'>
+        {recipes.map((recipe) => (
+          <div key={recipe.id} className='grid-item'>
+            <img src={recipe.image} alt={recipe.title} />
+            <h3>{recipe.title}</h3>
+            <p>{recipe.instructions}</p>
+            <button onClick={() => handleDeleteRecipe(recipe.id)}>
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

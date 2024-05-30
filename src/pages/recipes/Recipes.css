@@ -1,13 +1,13 @@
 /* mobile first style */
 
-.add-recipe-form {
+/* .add-recipe-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
-}
+} */
 
-.add-recipe-form input,
+/* .add-recipe-form input,
 .add-recipe-form button {
   padding: 10px;
   font-size: 16px;
@@ -22,7 +22,7 @@
 
 .add-recipe-form button:hover {
   background-color: #45a049;
-}
+} */
 
 .container {
   display: flex;
@@ -53,6 +53,8 @@
 }
 
 .searchButton {
+  display: flex;
+  position: relative;
   background-color: red;
   border-radius: 50%;
   height: 100px;
