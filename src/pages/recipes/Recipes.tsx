@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './Recipes.css';
 import { API_KEY } from '../../assets/secret/secret';
 import CharactersGrid from '../../components/characters-grid/CharactersGrid';
+import Pagination from 'react-bootstrap/Pagination';
 
 type Recipe = {
   id: string;
@@ -23,21 +24,26 @@ const Recipes = () => {
   const [loading, setLoading] = useState(false); // Manage loading state
   const [error, setError] = useState<string | null>(null); // Manage error state
   const [resultsDisplayed, setResultsDisplayed] = useState(false); // State to track if results are displayed
+  const [currentPage, setCurrentPage] = useState(1); // Manage current page
+  const [totalPages, setTotalPages] = useState(1); // Manage total pages
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.trim().toLowerCase());
   };
 
-  const fetchRecipesFromAPI = async (query: string) => {
+  const fetchRecipesFromAPI = async (query: string, page: number = 1) => {
     const API_URL = `https://api.spoonacular.com/recipes/complexSearch`;
     try {
       const response = await fetch(
-        `${API_URL}?apiKey=${API_KEY}&query=${query}&number=3`
+        `${API_URL}?apiKey=${API_KEY}&query=${query}&number=3&offset=${
+          (page - 1) * 3
+        }`
       );
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      setTotalPages(Math.ceil(data.totalResults / 3)); // Assuming the API provides totalResults
       return data.results.map((recipe: any) => ({
         id: recipe.id.toString(),
         title: recipe.title,
@@ -57,11 +63,11 @@ const Recipes = () => {
     }
   };
 
-  const fetchRecipes = async (query: string) => {
+  const fetchRecipes = async (query: string, page: number = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const apiRecipes = await fetchRecipesFromAPI(query);
+      const apiRecipes = await fetchRecipesFromAPI(query, page);
       setRecipes(apiRecipes);
       setResultsDisplayed(true);
       const root = document.getElementById('root');
@@ -78,9 +84,15 @@ const Recipes = () => {
 
   const handleSearchClick = () => {
     setSearchQuery(inputValue);
+    setCurrentPage(1);
     if (inputValue) {
-      fetchRecipes(inputValue);
+      fetchRecipes(inputValue, 1);
     }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchRecipes(searchQuery, page);
   };
 
   useEffect(() => {
@@ -90,6 +102,42 @@ const Recipes = () => {
     };
   }, []);
 
+  const getPaginationItems = () => {
+    const items = [];
+    const maxPageItems = 5;
+    const halfPageItems = Math.floor(maxPageItems / 2);
+    let startPage = Math.max(1, currentPage - halfPageItems);
+    let endPage = Math.min(totalPages, currentPage + halfPageItems);
+
+    if (currentPage - halfPageItems <= 0) {
+      endPage = Math.min(
+        totalPages,
+        endPage + (halfPageItems - currentPage + 1)
+      );
+    }
+
+    if (currentPage + halfPageItems > totalPages) {
+      startPage = Math.max(
+        1,
+        startPage - (currentPage + halfPageItems - totalPages)
+      );
+    }
+
+    for (let number = startPage; number <= endPage; number++) {
+      items.push(
+        <Pagination.Item
+          key={number}
+          active={number === currentPage}
+          onClick={() => handlePageChange(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+
+    return items;
+  };
+
   return (
     <div className='container'>
       <div
@@ -98,6 +146,7 @@ const Recipes = () => {
         }`}
       ></div>
       <input
+        className='searchInput'
         type='text'
         value={inputValue}
         onChange={handleInputChange}
@@ -109,9 +158,26 @@ const Recipes = () => {
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {resultsDisplayed && (
-        <div className='grid-container'>
-          <CharactersGrid characters={recipes} />
-        </div>
+        <>
+          <div className='grid-container'>
+            <CharactersGrid characters={recipes} />
+          </div>
+          {totalPages > 1 && (
+            <Pagination>
+              <Pagination.First onClick={() => handlePageChange(1)} />
+              <Pagination.Prev
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              />
+              {getPaginationItems()}
+              <Pagination.Next
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              />
+              <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+            </Pagination>
+          )}
+        </>
       )}
     </div>
   );

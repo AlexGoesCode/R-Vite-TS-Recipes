@@ -5,6 +5,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import './CreateRecipe.css';
@@ -25,6 +26,7 @@ const CreateRecipe = () => {
   const [image, setImage] = useState('');
   const [author, setAuthor] = useState('');
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Function to fetch recipes from Firestore
   const fetchRecipes = async () => {
@@ -44,22 +46,34 @@ const CreateRecipe = () => {
     e.preventDefault();
 
     try {
-      await addDoc(collection(db, 'recipes'), {
-        title,
-        ingredients: ingredients.split(','),
-        instructions,
-        image,
-        author,
-      });
+      if (editingId) {
+        const recipeDoc = doc(db, 'recipes', editingId);
+        await updateDoc(recipeDoc, {
+          title,
+          ingredients: ingredients.split(','),
+          instructions,
+          image,
+          author,
+        });
+        setEditingId(null);
+      } else {
+        await addDoc(collection(db, 'recipes'), {
+          title,
+          ingredients: ingredients.split(','),
+          instructions,
+          image,
+          author,
+        });
+      }
       setTitle('');
       setIngredients('');
       setInstructions('');
       setImage('');
       setAuthor('');
-      fetchRecipes(); // Fetch updated list of recipes after adding a new one
-      alert('Recipe added successfully!');
+      fetchRecipes(); // Fetch updated list of recipes after adding/editing
+      alert('Recipe added/edited successfully!');
     } catch (err) {
-      console.error('Error adding document: ', err);
+      console.error('Error adding/editing document: ', err);
     }
   };
 
@@ -71,6 +85,15 @@ const CreateRecipe = () => {
     } catch (err) {
       console.error('Error deleting document: ', err);
     }
+  };
+
+  const handleEditRecipe = (recipe: Recipe) => {
+    setTitle(recipe.title);
+    setIngredients(recipe.ingredients.join(','));
+    setInstructions(recipe.instructions);
+    setImage(recipe.image);
+    setAuthor(recipe.author);
+    setEditingId(recipe.id);
   };
 
   useEffect(() => {
@@ -111,7 +134,9 @@ const CreateRecipe = () => {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <button type='submit'>Add Recipe</button>
+        <button type='submit'>
+          {editingId ? 'Edit Recipe' : 'Add Recipe'}
+        </button>
       </form>
 
       <div className='grid-container'>
@@ -120,6 +145,7 @@ const CreateRecipe = () => {
             <img src={recipe.image} alt={recipe.title} />
             <h3>{recipe.title}</h3>
             <p>{recipe.instructions}</p>
+            <button onClick={() => handleEditRecipe(recipe)}>Edit</button>
             <button onClick={() => handleDeleteRecipe(recipe.id)}>
               Delete
             </button>

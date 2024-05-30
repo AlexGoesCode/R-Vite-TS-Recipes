@@ -1,28 +1,13 @@
 /* Mobile-first styles */
-
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
-
-/* .root {
-  position: relative;
-  top: 0;
-  margin-bottom: 20px;
-} */
-
 .navbar {
-  display: flex;
-  flex-direction: row;
-  align-items: right;
-  padding: 10px;
-  /* position: fixed; Added to fix the navbar to the top */
-  /* top: 0; Ensures the navbar is at the top */
-  width: 60%; /* Ensures the navbar takes the full width */
+  width: 80%; /* Ensure the navbar takes the full width */
   background-color: #fff; /* Optional: To make sure the navbar has a background */
   z-index: 1000; /* Optional: To make sure the navbar is above other elements */
+}
+
+/* Ensure the navbar items stay on the same line until it collapses */
+.navbar .nav-item {
+  white-space: nowrap;
 }
 
 /* Tablet and above */
@@ -33,7 +18,9 @@
   }
 }
 
+/* Ensure the d-flex alignment is correct */
 .navbar .d-flex {
   display: flex;
-  align-items: right;
+  align-items: center;
+  margin-left: auto; /* Move the user info and buttons to the right edge */
 }
