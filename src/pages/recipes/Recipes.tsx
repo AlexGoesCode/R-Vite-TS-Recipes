@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import './Recipes.css';
 import { API_KEY } from '../../assets/secret/secret';
-import CharactersGrid from '../../components/characters-grid/CharactersGrid';
-import Pagination from 'react-bootstrap/Pagination';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import SearchBar from '../../components/search-bar/SearchBar';
+import RecipeList from '../../components/recipe-list/RecipeList';
+import RecipeModal from '../../components/recipe-modal/RecipeModal';
 
 type Recipe = {
   id: string;
@@ -19,11 +18,11 @@ type Recipe = {
   author: string;
 };
 
-// type Character = {
-//   id: string;
-//   title: string;
-//   image: string;
-// };
+type Character = {
+  id: string;
+  title: string;
+  image: string;
+};
 
 const Recipes = () => {
   const [inputValue, setInputValue] = useState(''); // Manage the input value
@@ -62,19 +61,33 @@ const Recipes = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      const detailedRecipes = await Promise.all(
+        data.results.map(async (recipe: any) => {
+          const detailsResponse = await fetch(
+            `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${API_KEY}`
+          );
+          if (!detailsResponse.ok) {
+            throw new Error('Failed to fetch recipe details');
+          }
+          const details = await detailsResponse.json();
+          return {
+            id: details.id.toString(),
+            title: details.title,
+            cuisine: details.cuisines.join(', '),
+            diet: details.diets.join(', '),
+            name: details.name,
+            image: details.image,
+            type: details.dishTypes.join(', '),
+            ingredients: details.extendedIngredients.map(
+              (ingredient: any) => ingredient.original
+            ),
+            instructions: details.instructions,
+            author: details.sourceName,
+          };
+        })
+      );
       setTotalPages(Math.ceil(data.totalResults / 3)); // Assuming the API provides totalResults
-      return data.results.map((recipe: any) => ({
-        id: recipe.id.toString(),
-        title: recipe.title,
-        cuisine: recipe.cuisine,
-        diet: recipe.diet,
-        name: recipe.name,
-        image: recipe.image,
-        type: recipe.type,
-        ingredients: [],
-        instructions: '',
-        author: '',
-      }));
+      return detailedRecipes;
     } catch (err) {
       console.error('Error fetching recipes from API:', err);
       setError('Failed to fetch recipes from API. Please try again.');
@@ -126,46 +139,24 @@ const Recipes = () => {
     setShowModal(true);
   };
 
+  const handleCharacterClick = (character: Character) => {
+    const recipe = recipes.find((r) => r.id === character.id);
+    if (recipe) {
+      handleRecipeClick(recipe);
+    }
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedRecipe(null);
   };
 
-  const getPaginationItems = () => {
-    const items = [];
-    const maxPageItems = 5;
-    const halfPageItems = Math.floor(maxPageItems / 2);
-    let startPage = Math.max(1, currentPage - halfPageItems);
-    let endPage = Math.min(totalPages, currentPage + halfPageItems);
-
-    if (currentPage - halfPageItems <= 0) {
-      endPage = Math.min(
-        totalPages,
-        endPage + (halfPageItems - currentPage + 1)
-      );
-    }
-
-    if (currentPage + halfPageItems > totalPages) {
-      startPage = Math.max(
-        1,
-        startPage - (currentPage + halfPageItems - totalPages)
-      );
-    }
-
-    for (let number = startPage; number <= endPage; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === currentPage}
-          onClick={() => handlePageChange(number)}
-        >
-          {number}
-        </Pagination.Item>
-      );
-    }
-
-    return items;
-  };
+  // Convert recipes to characters
+  const characters: Character[] = recipes.map((recipe) => ({
+    id: recipe.id,
+    title: recipe.title,
+    image: recipe.image,
+  }));
 
   return (
     <div className='container'>
@@ -174,101 +165,29 @@ const Recipes = () => {
           resultsDisplayed ? 'results-displayed' : ''
         }`}
       ></div>
-      <select
-        className='filterSelect'
-        value={selectedDiet}
-        onChange={handleDietChange}
-      >
-        <option value=''>All Diets</option>
-        <option value='gluten free'>Gluten Free</option>
-        <option value='ketogenic'>Ketogenic</option>
-        <option value='vegetarian'>Vegetarian</option>
-        <option value='vegan'>Vegan</option>
-        <option value='pescatarian'>Pescatarian</option>
-        <option value='paleo'>Paleo</option>
-        <option value='primal'>Primal</option>
-        <option value='whole30'>Whole30</option>
-      </select>
-      <input
-        className='searchInput'
-        type='text'
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder='Search for recipes...'
+      <SearchBar
+        inputValue={inputValue}
+        handleInputChange={handleInputChange}
+        selectedDiet={selectedDiet}
+        handleDietChange={handleDietChange}
+        handleSearchClick={handleSearchClick}
       />
-      <button className='searchButton' onClick={handleSearchClick}>
-        Search
-      </button>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {resultsDisplayed && (
-        <>
-          <CharactersGrid
-            characters={recipes.map((recipe) => ({
-              id: recipe.id,
-              title: recipe.title,
-              image: recipe.image,
-            }))}
-            onCharacterClick={(character) =>
-              handleRecipeClick(
-                recipes.find((recipe) => recipe.id === character.id)!
-              )
-            }
-          />
-          {totalPages > 1 && (
-            <Pagination>
-              <Pagination.First onClick={() => handlePageChange(1)} />
-              <Pagination.Prev
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              />
-              {getPaginationItems()}
-              <Pagination.Next
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              />
-              <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-            </Pagination>
-          )}
-        </>
+        <RecipeList
+          characters={characters}
+          onCharacterClick={handleCharacterClick}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
       )}
-
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{selectedRecipe?.title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <img
-            src={selectedRecipe?.image}
-            alt={selectedRecipe?.title}
-            style={{ width: '100%' }}
-          />
-          <p>
-            <strong>Cuisine:</strong> {selectedRecipe?.cuisine}
-          </p>
-          <p>
-            <strong>Diet:</strong> {selectedRecipe?.diet}
-          </p>
-          <p>
-            <strong>Type:</strong> {selectedRecipe?.type}
-          </p>
-          <p>
-            <strong>Ingredients:</strong>{' '}
-            {selectedRecipe?.ingredients.join(', ')}
-          </p>
-          <p>
-            <strong>Instructions:</strong> {selectedRecipe?.instructions}
-          </p>
-          <p>
-            <strong>Author:</strong> {selectedRecipe?.author}
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleCloseModal}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <RecipeModal
+        showModal={showModal}
+        selectedRecipe={selectedRecipe}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   );
 };
