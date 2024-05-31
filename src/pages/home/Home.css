@@ -1,0 +1,39 @@
+.righteous-regular {
+  font-family: 'Righteous', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(
+    100vh
+  ); /* Adjust this value based on the height of your navbar */
+  text-align: center;
+  flex-direction: column;
+}
+
+.h1-container {
+  display: flex;
+  justify-content: top;
+  align-items: top;
+  margin-top: -450px;
+  font-size: x-small;
+}
+
+.h2-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 220px; /* Adjust this value to move h2 */
+  font-family: 'Righteous', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: white;
+}
+
+.h2-container h2 {
+  font-size: 5em;
+}

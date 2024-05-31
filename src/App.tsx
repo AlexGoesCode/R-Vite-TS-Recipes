@@ -8,9 +8,11 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <CustomNavbar />
-        <div className='app'>
-          <Routes />
+        <div className='root'>
+          <CustomNavbar />
+          <div className='app'>
+            <Routes />
+          </div>
         </div>
       </Router>
     </AuthProvider>
