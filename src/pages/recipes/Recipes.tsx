@@ -3,6 +3,8 @@ import './Recipes.css';
 import { API_KEY } from '../../assets/secret/secret';
 import CharactersGrid from '../../components/characters-grid/CharactersGrid';
 import Pagination from 'react-bootstrap/Pagination';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 type Recipe = {
   id: string;
@@ -17,6 +19,12 @@ type Recipe = {
   author: string;
 };
 
+// type Character = {
+//   id: string;
+//   title: string;
+//   image: string;
+// };
+
 const Recipes = () => {
   const [inputValue, setInputValue] = useState(''); // Manage the input value
   const [searchQuery, setSearchQuery] = useState(''); // Manage the search query state
@@ -27,6 +35,8 @@ const Recipes = () => {
   const [currentPage, setCurrentPage] = useState(1); // Manage current page
   const [totalPages, setTotalPages] = useState(1); // Manage total pages
   const [selectedDiet, setSelectedDiet] = useState(''); // Manage selected diet
+  const [showModal, setShowModal] = useState(false); // Manage modal visibility
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null); // Manage selected recipe
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value.trim().toLowerCase());
@@ -111,6 +121,16 @@ const Recipes = () => {
     };
   }, []);
 
+  const handleRecipeClick = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedRecipe(null);
+  };
+
   const getPaginationItems = () => {
     const items = [];
     const maxPageItems = 5;
@@ -183,9 +203,18 @@ const Recipes = () => {
       {error && <p>{error}</p>}
       {resultsDisplayed && (
         <>
-          <div className='grid-container'>
-            <CharactersGrid characters={recipes} />
-          </div>
+          <CharactersGrid
+            characters={recipes.map((recipe) => ({
+              id: recipe.id,
+              title: recipe.title,
+              image: recipe.image,
+            }))}
+            onCharacterClick={(character) =>
+              handleRecipeClick(
+                recipes.find((recipe) => recipe.id === character.id)!
+              )
+            }
+          />
           {totalPages > 1 && (
             <Pagination>
               <Pagination.First onClick={() => handlePageChange(1)} />
@@ -203,6 +232,43 @@ const Recipes = () => {
           )}
         </>
       )}
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedRecipe?.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img
+            src={selectedRecipe?.image}
+            alt={selectedRecipe?.title}
+            style={{ width: '100%' }}
+          />
+          <p>
+            <strong>Cuisine:</strong> {selectedRecipe?.cuisine}
+          </p>
+          <p>
+            <strong>Diet:</strong> {selectedRecipe?.diet}
+          </p>
+          <p>
+            <strong>Type:</strong> {selectedRecipe?.type}
+          </p>
+          <p>
+            <strong>Ingredients:</strong>{' '}
+            {selectedRecipe?.ingredients.join(', ')}
+          </p>
+          <p>
+            <strong>Instructions:</strong> {selectedRecipe?.instructions}
+          </p>
+          <p>
+            <strong>Author:</strong> {selectedRecipe?.author}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
