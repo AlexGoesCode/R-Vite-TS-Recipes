@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SearchBarProps {
   inputValue: string;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,19 +6,13 @@ interface SearchBarProps {
   handleSearchClick: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
-  inputValue,
-  handleInputChange,
-  selectedDiet,
-  handleDietChange,
-  handleSearchClick,
-}) => {
+function SearchBar(props: SearchBarProps) {
   return (
     <div className='search-bar'>
       <select
         className='filterSelect'
-        value={selectedDiet}
-        onChange={handleDietChange}
+        value={props.selectedDiet}
+        onChange={props.handleDietChange}
       >
         <option value=''>All Diets</option>
         <option value='gluten free'>Gluten Free</option>
@@ -35,15 +27,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <input
         className='searchInput'
         type='text'
-        value={inputValue}
-        onChange={handleInputChange}
+        value={props.inputValue}
+        onChange={props.handleInputChange}
         placeholder='Search for recipes...'
       />
-      <button className='searchButton' onClick={handleSearchClick}>
+      <button className='searchButton' onClick={props.handleSearchClick}>
         Search
       </button>
     </div>
   );
-};
+}
 
 export default SearchBar;

@@ -1,4 +1,3 @@
-import React from 'react';
 import CharactersGrid from '../../components/characters-grid/CharactersGrid';
 import Pagination from 'react-bootstrap/Pagination';
 
@@ -16,31 +15,25 @@ interface RecipeListProps {
   handlePageChange: (page: number) => void;
 }
 
-const RecipeList: React.FC<RecipeListProps> = ({
-  characters,
-  onCharacterClick,
-  totalPages,
-  currentPage,
-  handlePageChange,
-}) => {
+function RecipeList(props: RecipeListProps) {
   const getPaginationItems = () => {
     const items = [];
     const maxPageItems = 5;
     const halfPageItems = Math.floor(maxPageItems / 2);
-    let startPage = Math.max(1, currentPage - halfPageItems);
-    let endPage = Math.min(totalPages, currentPage + halfPageItems);
+    let startPage = Math.max(1, props.currentPage - halfPageItems);
+    let endPage = Math.min(props.totalPages, props.currentPage + halfPageItems);
 
-    if (currentPage - halfPageItems <= 0) {
+    if (props.currentPage - halfPageItems <= 0) {
       endPage = Math.min(
-        totalPages,
-        endPage + (halfPageItems - currentPage + 1)
+        props.totalPages,
+        endPage + (halfPageItems - props.currentPage + 1)
       );
     }
 
-    if (currentPage + halfPageItems > totalPages) {
+    if (props.currentPage + halfPageItems > props.totalPages) {
       startPage = Math.max(
         1,
-        startPage - (currentPage + halfPageItems - totalPages)
+        startPage - (props.currentPage + halfPageItems - props.totalPages)
       );
     }
 
@@ -48,8 +41,8 @@ const RecipeList: React.FC<RecipeListProps> = ({
       items.push(
         <Pagination.Item
           key={number}
-          active={number === currentPage}
-          onClick={() => handlePageChange(number)}
+          active={number === props.currentPage}
+          onClick={() => props.handlePageChange(number)}
         >
           {number}
         </Pagination.Item>
@@ -62,26 +55,28 @@ const RecipeList: React.FC<RecipeListProps> = ({
   return (
     <div className='recipe-list'>
       <CharactersGrid
-        characters={characters}
-        onCharacterClick={onCharacterClick}
+        characters={props.characters}
+        onCharacterClick={props.onCharacterClick}
       />
-      {totalPages > 1 && (
+      {props.totalPages > 1 && (
         <Pagination>
-          <Pagination.First onClick={() => handlePageChange(1)} />
+          <Pagination.First onClick={() => props.handlePageChange(1)} />
           <Pagination.Prev
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            onClick={() => props.handlePageChange(props.currentPage - 1)}
+            disabled={props.currentPage === 1}
           />
           {getPaginationItems()}
           <Pagination.Next
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            onClick={() => props.handlePageChange(props.currentPage + 1)}
+            disabled={props.currentPage === props.totalPages}
           />
-          <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+          <Pagination.Last
+            onClick={() => props.handlePageChange(props.totalPages)}
+          />
         </Pagination>
       )}
     </div>
   );
-};
+}
 
 export default RecipeList;
