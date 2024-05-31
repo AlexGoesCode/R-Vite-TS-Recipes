@@ -1,23 +1,13 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-
-type Recipe = {
-  id: string;
-  title: string;
-  cuisine?: string;
-  diet?: string;
-  name: string;
-  image: string;
-  type?: string;
-  ingredients: string[];
-  instructions: string;
-  author: string;
-};
+import { Recipe } from '../../types/types'; // Import the unified Recipe type
 
 interface RecipeModalProps {
   showModal: boolean;
   selectedRecipe: Recipe | null;
   handleCloseModal: () => void;
+  handleEditRecipe: (recipe: Recipe) => void;
+  handleDeleteRecipe: (id: string) => void;
 }
 
 function RecipeModal(props: RecipeModalProps) {
@@ -57,6 +47,18 @@ function RecipeModal(props: RecipeModalProps) {
         )}
       </Modal.Body>
       <Modal.Footer>
+        <Button
+          variant='secondary'
+          onClick={() => props.handleEditRecipe(props.selectedRecipe!)}
+        >
+          Edit
+        </Button>
+        <Button
+          variant='danger'
+          onClick={() => props.handleDeleteRecipe(props.selectedRecipe!.id)}
+        >
+          Delete
+        </Button>
         <Button variant='secondary' onClick={props.handleCloseModal}>
           Close
         </Button>

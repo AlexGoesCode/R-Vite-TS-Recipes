@@ -151,6 +151,16 @@ const Recipes = () => {
     setSelectedRecipe(null);
   };
 
+  const handleEditRecipe = (recipe: Recipe) => {
+    // Logic to edit the recipe
+    console.log('Edit recipe:', recipe);
+  };
+
+  const handleDeleteRecipe = (id: string) => {
+    // Logic to delete the recipe
+    console.log('Delete recipe with id:', id);
+  };
+
   // Convert recipes to characters
   const characters: Character[] = recipes.map((recipe) => ({
     id: recipe.id,
@@ -187,6 +197,8 @@ const Recipes = () => {
         showModal={showModal}
         selectedRecipe={selectedRecipe}
         handleCloseModal={handleCloseModal}
+        handleEditRecipe={handleEditRecipe}
+        handleDeleteRecipe={handleDeleteRecipe}
       />
     </div>
   );

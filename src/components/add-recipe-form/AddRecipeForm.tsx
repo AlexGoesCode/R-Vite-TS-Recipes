@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 
-const AddRecipeForm = () => {
+interface AddRecipeFormProps {
+  fetchRecipes: () => void;
+}
+
+const AddRecipeForm = ({ fetchRecipes }: AddRecipeFormProps) => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
@@ -25,6 +29,7 @@ const AddRecipeForm = () => {
       setInstructions('');
       setImage('');
       setAuthor('');
+      fetchRecipes(); // Fetch updated list of recipes after adding a new one
     } catch (err) {
       console.error('Error adding document: ', err);
     }

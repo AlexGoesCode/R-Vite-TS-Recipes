@@ -18,7 +18,7 @@ const CustomNavbar = () => {
     <Navbar expand='lg' className='navbar'>
       <Container fluid>
         <Navbar.Brand as={Link} to='/'>
-          Navbar scroll
+          Flavours.Dance!
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='navbarScroll' />
         <Navbar.Collapse id='navbarScroll' className='justify-content-between'>
