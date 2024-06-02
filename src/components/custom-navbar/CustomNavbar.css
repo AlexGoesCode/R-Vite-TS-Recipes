@@ -1,6 +1,6 @@
 /* Mobile-first styles */
 .navbar {
-  width: 80%; /* Ensure the navbar takes the full width */
+  width: 60%; /* Ensure the navbar takes the full width */
   background-color: #fff; /* Optional: To make sure the navbar has a background */
   z-index: 1000; /* Optional: To make sure the navbar is above other elements */
 }

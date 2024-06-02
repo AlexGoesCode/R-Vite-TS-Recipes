@@ -15,6 +15,7 @@ type Character = {
 const Recipes = () => {
   const [inputValue, setInputValue] = useState(''); // Manage the input value
   const [searchQuery, setSearchQuery] = useState(''); // Manage the search query state
+  const [ingredient, setIngredient] = useState(''); // Manage the ingredient filter
   const [recipes, setRecipes] = useState<Recipe[]>([]); // Manage the fetched recipes
   const [loading, setLoading] = useState(false); // Manage loading state
   const [error, setError] = useState<string | null>(null); // Manage error state
@@ -33,15 +34,22 @@ const Recipes = () => {
     setSelectedDiet(event.target.value);
   };
 
+  const handleIngredientChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setIngredient(event.target.value.trim().toLowerCase());
+  };
+
   const fetchRecipesFromAPI = async (
     query: string,
     diet: string,
+    ingredient: string,
     page: number = 1
   ) => {
     const API_URL = `https://api.spoonacular.com/recipes/complexSearch`;
     try {
       const response = await fetch(
-        `${API_URL}?apiKey=${API_KEY}&query=${query}&diet=${diet}&number=3&offset=${
+        `${API_URL}?apiKey=${API_KEY}&query=${query}&diet=${diet}&includeIngredients=${ingredient}&number=3&offset=${
           (page - 1) * 3
         }`
       );
@@ -87,7 +95,12 @@ const Recipes = () => {
     setLoading(true);
     setError(null);
     try {
-      const apiRecipes = await fetchRecipesFromAPI(query, selectedDiet, page);
+      const apiRecipes = await fetchRecipesFromAPI(
+        query,
+        selectedDiet,
+        ingredient,
+        page
+      );
       setRecipes(apiRecipes);
       setResultsDisplayed(true);
       const root = document.getElementById('root');
@@ -105,7 +118,7 @@ const Recipes = () => {
   const handleSearchClick = () => {
     setSearchQuery(inputValue);
     setCurrentPage(1);
-    if (inputValue) {
+    if (inputValue || ingredient) {
       fetchRecipes(inputValue, 1);
     }
   };
@@ -169,6 +182,8 @@ const Recipes = () => {
         selectedDiet={selectedDiet}
         handleDietChange={handleDietChange}
         handleSearchClick={handleSearchClick}
+        ingredient={ingredient}
+        handleIngredientChange={handleIngredientChange}
       />
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}

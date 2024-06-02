@@ -4,6 +4,8 @@ interface SearchBarProps {
   selectedDiet: string;
   handleDietChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   handleSearchClick: () => void;
+  ingredient: string;
+  handleIngredientChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function SearchBar(props: SearchBarProps) {
@@ -25,11 +27,25 @@ function SearchBar(props: SearchBarProps) {
         <option value='whole30'>Whole30</option>
       </select>
       <input
+        className='ingredientInput' // Added this input
+        type='text'
+        value={props.ingredient}
+        onChange={props.handleIngredientChange}
+        placeholder='Search by ingredient...'
+      />
+      <input
         className='searchInput'
         type='text'
         value={props.inputValue}
         onChange={props.handleInputChange}
-        placeholder='Search for recipes...'
+        placeholder='Search for recipes by name...'
+      />
+      <input
+        className='ingredientInput'
+        type='text'
+        value={props.ingredient}
+        onChange={props.handleIngredientChange}
+        placeholder='Search for recipes by ingredient...'
       />
       <button className='searchButton' onClick={props.handleSearchClick}>
         Search

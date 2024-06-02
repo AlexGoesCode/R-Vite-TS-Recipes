@@ -66,12 +66,23 @@
 
 .filterSelect {
   position: fixed;
-  top: 30%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 250px;
   height: 40px;
   margin-bottom: 20px;
+  padding: 7px;
+}
+
+.ingredientInput {
+  /* New styles for ingredient input */
+  position: fixed;
+  top: 30%; /* Position adjusted above search input */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 40px;
   padding: 7px;
 }
 
