@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className='centered-container'>
       <div className='h1-container'>
-        <h1>Welcome {user ? user : 'Guest'}</h1>
+        <h1>Welcome {user ? user.email : 'Guest'}</h1>
       </div>
       <div className='h2-container'>
         <h2>

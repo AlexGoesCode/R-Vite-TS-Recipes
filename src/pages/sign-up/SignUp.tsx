@@ -23,7 +23,7 @@ const SignUp = () => {
         email,
         password
       );
-      setUser(userCredential.user.email); // Set user email or other user data as needed
+      setUser({ email: userCredential.user.email! }); // Set the user object with email
       console.log('User signed up:', userCredential.user);
     } catch (err) {
       console.error('Error signing up:', err);

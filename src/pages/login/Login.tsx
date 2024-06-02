@@ -22,7 +22,7 @@ const Login = () => {
         username,
         password
       );
-      setUser(userCredential.user.email); // Set user email or other user data as needed
+      setUser({ email: userCredential.user.email! }); // Set the user object with email
       console.log('User logged in:', userCredential.user);
     } catch (err) {
       console.error('Error logging in:', err);

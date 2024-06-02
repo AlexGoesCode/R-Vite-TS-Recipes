@@ -4,19 +4,7 @@ import { API_KEY } from '../../assets/secret/secret';
 import SearchBar from '../../components/search-bar/SearchBar';
 import RecipeList from '../../components/recipe-list/RecipeList';
 import RecipeModal from '../../components/recipe-modal/RecipeModal';
-
-type Recipe = {
-  id: string;
-  title: string;
-  cuisine?: string;
-  diet?: string;
-  name: string;
-  image: string;
-  type?: string;
-  ingredients: string[];
-  instructions: string;
-  author: string;
-};
+import { Recipe } from '../../types/types'; // Import the unified Recipe type
 
 type Character = {
   id: string;

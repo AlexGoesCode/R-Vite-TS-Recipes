@@ -1,11 +1,16 @@
-// Define the AuthContext, AuthProvider and useAuth hook
-import { createContext, useState, ReactNode, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+} from 'react';
 
 // Define the shape of the context state
 interface AuthContextProps {
-  user: string | null;
-  setUser: (user: string | null) => void;
-  login: (username: string) => void;
+  user: { email: string } | null;
+  setUser: (user: { email: string } | null) => void;
+  login: (user: { email: string }) => void;
   logout: () => void;
 }
 
@@ -19,13 +24,25 @@ interface AuthProviderProps {
 
 // Create the provider component
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<{ email: string } | null>(null);
 
-  const login = (username: string) => {
-    setUser(username);
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    console.log('Stored User on load:', storedUser); // Debug log
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const login = (user: { email: string }) => {
+    console.log('Logging in user:', user); // Debug log
+    localStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
   };
 
   const logout = () => {
+    console.log('Logging out user'); // Debug log
+    localStorage.removeItem('user');
     setUser(null);
   };
 
@@ -36,11 +53,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 };
 
-// Custom hook to use the AppContext
+// Custom hook to use the AuthContext
 const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AppProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

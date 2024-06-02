@@ -1,18 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Import the useAuth function
+import { useAuth } from '../../context/AuthContext';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import ButtonLink from '../custom-link/ButtonLink'; // Import the custom ButtonLink component
+import ButtonLink from '../custom-link/ButtonLink';
 import './CustomNavbar.css';
 
 const CustomNavbar = () => {
-  const { user, setUser } = useAuth();
-
-  const handleLogout = () => {
-    setUser(null);
-  };
+  const { user, logout } = useAuth();
 
   return (
     <Navbar expand='lg' className='navbar'>
@@ -42,10 +38,10 @@ const CustomNavbar = () => {
           <div className='d-flex align-items-center'>
             {user ? (
               <>
-                <span className='me-2'>Welcome, {user}</span>
+                <span className='me-2'>Welcome, {user.email}</span>
                 <Button
                   variant='outline-danger'
-                  onClick={handleLogout}
+                  onClick={logout}
                   className='me-2'
                 >
                   Logout
