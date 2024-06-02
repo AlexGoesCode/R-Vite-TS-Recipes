@@ -5,19 +5,22 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const { setUser } = useAuth();
+  // define the Login component
+  const [username, setUsername] = useState(''); // useState hooks to declare
+  const [password, setPassword] = useState(''); // username and password
+  const [error, setError] = useState(''); // error state
+  const { setUser } = useAuth(); // set the user state after a successful login.
 
   const handleLogin = async () => {
+    // define the handleLogin function
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
+      setError('Password must be at least 6 characters long.'); // check if password has >= 6 characters
       return;
     }
 
     try {
       const userCredential = await signInWithEmailAndPassword(
+        // authenticate the user w. email and pass
         auth,
         username,
         password
@@ -25,12 +28,13 @@ const Login = () => {
       setUser({ email: userCredential.user.email! }); // Set the user object with email
       console.log('User logged in:', userCredential.user);
     } catch (err) {
-      console.error('Error logging in:', err);
+      console.error('Error logging in:', err); // Handle errors by updating the error state variable.
       setError('Failed to log in. Please try again.');
     }
   };
 
   return (
+    // Bootstrap login form
     <Container
       className='d-flex justify-content-center align-items-center'
       style={{ height: '100vh' }}
@@ -41,7 +45,8 @@ const Login = () => {
           className='p-4 border rounded shadow-sm bg-white'
         >
           <h2 className='text-center mb-4'>Login</h2>
-          {error && <p className='text-danger'>{error}</p>}
+          {error && <p className='text-danger'>{error}</p>} // Display error
+          message if error state is not empty
           <Form>
             <Form.Group className='mb-3' controlId='formUsername'>
               <Form.Label>E-mail</Form.Label>

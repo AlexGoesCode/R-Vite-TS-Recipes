@@ -15,12 +15,16 @@
   top: 20px; /* Adjust as needed */
   left: 50%;
   transform: translateX(-50%);
-  font-size: 7px;
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 20px;
 }
 
 .h2-container {
-  position: absolute;
-  top: 40%; /* Adjust as needed */
+  position: fixed;
+  top: 48%; /* Adjust as needed */
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: 'Righteous', sans-serif;
@@ -31,7 +35,6 @@
 
 .h2-container h2 {
   font-size: 5em;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow */
 }
 
 .home-container {
@@ -41,31 +44,27 @@
 }
 
 .intro-block {
-  position: absolute;
-  top: 20%; /* Adjust as needed */
-  left: 10%; /* Adjust as needed */
+  position: fixed;
+  top: 22%; /* Adjust as needed */
+  left: 2%; /* Adjust as needed */
   background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1.2em;
   width: 500px;
-  margin-left: -910px;
-  margin-top: -20px;
 }
 
 .philosophy-block {
-  position: absolute;
+  position: fixed;
   bottom: 20%; /* Adjust as needed */
-  right: 10%; /* Adjust as needed */
+  right: 2%; /* Adjust as needed */
   background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1.2em;
-  margin-right: -880px;
   width: 500px;
-  margin-bottom: +80px;
 }
 
 @media (max-width: 768px) {
