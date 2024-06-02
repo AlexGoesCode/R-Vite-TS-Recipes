@@ -1,15 +1,17 @@
 /* Mobile-first styles */
 .navbar {
-  width: 50%; /* Ensure the navbar takes the full width */
+  width: 70%; /* Ensure the navbar takes the full width */
   background-color: #fff; /* Optional: To make sure the navbar has a background */
   z-index: 1000; /* Optional: To make sure the navbar is above other elements */
   height: 80px; /* Align the navbar items to the right */
   font-size: 20px; /* Optional: To make the text larger */
+  align-items: stretch; /* Optional: To make sure the navbar items are the same height */
+  white-space: nowrap;
 }
 
-/* Ensure the navbar items stay on the same line until it collapses */
-.navbar .nav-item {
-  white-space: nowrap;
+.justify-content-between.navbar-collapse.collapse {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Tablet and above */

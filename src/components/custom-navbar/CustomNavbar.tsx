@@ -38,11 +38,11 @@ const CustomNavbar = () => {
           <div className='d-flex align-items-center'>
             {user ? (
               <>
-                <span className='me-2'>Welcome, {user.email}</span>
+                <span className='me-2'>Hey, {user.email}</span>
                 <Button
                   variant='outline-danger'
                   onClick={logout}
-                  className='me-2'
+                  className='me-2-logout'
                 >
                   Logout
                 </Button>
@@ -52,7 +52,7 @@ const CustomNavbar = () => {
                 <ButtonLink
                   variant='outline-success'
                   to='/login'
-                  className='me-2'
+                  className='me-2-login'
                 >
                   Login
                 </ButtonLink>

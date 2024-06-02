@@ -13,8 +13,10 @@ const Login = () => {
 
   const handleLogin = async () => {
     // define the handleLogin function
+
+    // check if password has >= 6 characters
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long.'); // check if password has >= 6 characters
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
@@ -25,16 +27,17 @@ const Login = () => {
         username,
         password
       );
-      setUser({ email: userCredential.user.email! }); // Set the user object with email
+      // Set the user object with email
+      setUser({ email: userCredential.user.email! });
       console.log('User logged in:', userCredential.user);
     } catch (err) {
-      console.error('Error logging in:', err); // Handle errors by updating the error state variable.
+      console.error('Error logging in:', err); // log error
       setError('Failed to log in. Please try again.');
     }
   };
 
+  // Bootstrap login form
   return (
-    // Bootstrap login form
     <Container
       className='d-flex justify-content-center align-items-center'
       style={{ height: '100vh' }}
@@ -45,8 +48,7 @@ const Login = () => {
           className='p-4 border rounded shadow-sm bg-white'
         >
           <h2 className='text-center mb-4'>Login</h2>
-          {error && <p className='text-danger'>{error}</p>} // Display error
-          message if error state is not empty
+          {error && <p className='text-danger'>{error}</p>}
           <Form>
             <Form.Group className='mb-3' controlId='formUsername'>
               <Form.Label>E-mail</Form.Label>
