@@ -1,5 +1,15 @@
 /* shared styles */
-.container {
+/* .footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+} */
+
+.container-recipes {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,12 +20,12 @@
   transition: all 1s ease; /* Smooth transition */
 }
 
-.container.results-displayed {
+.container-recipes .results-displayed {
   height: auto;
   margin-top: 100px; /* Adjust to fit under the navbar */
 }
 
-.container.dim-background {
+.container-recipes .dim-background {
   background-color: rgba(0, 0, 0, 0.3); /* Slightly darker overlay */
   filter: brightness(0.8) saturate(0.5); /* Dim and reduce saturation */
 }
@@ -113,6 +123,8 @@
   top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* margin-bottom: 20px; */
+  position: fixed;
 }
 
 .searchButton:hover {

@@ -10,3 +10,8 @@ export type Recipe = {
   instructions: string;
   author: string;
 };
+
+export type UserType = {
+  email: string;
+  uid: string;
+};

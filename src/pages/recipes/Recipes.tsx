@@ -5,6 +5,8 @@ import SearchBar from '../../components/search-bar/SearchBar';
 import RecipeList from '../../components/recipe-list/RecipeList';
 import RecipeModal from '../../components/recipe-modal/RecipeModal';
 import { Recipe } from '../../types/types'; // Import the unified Recipe type
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebaseConfig';
 
 type Character = {
   id: string;
@@ -152,9 +154,14 @@ const Recipes = () => {
     setSelectedRecipe(null);
   };
 
-  const handleEditRecipe = (recipe: Recipe) => {
+  const handleEditRecipe = async (recipeId: string) => {
     // Logic to edit the recipe
-    console.log('Edit recipe:', recipe);
+    console.log('Edit recipe:', recipeId);
+    const recipeToEdit = doc(db, 'recipes', recipeId);
+    console.log('recipeToEdit :>> ', recipeToEdit);
+    await updateDoc(recipeToEdit, {
+      title: 'modified title',
+    });
   };
 
   const handleDeleteRecipe = (id: string) => {
@@ -170,7 +177,7 @@ const Recipes = () => {
   }));
 
   return (
-    <div className='container'>
+    <div className='container-recipes'>
       <div
         className={`container searchContainer ${
           resultsDisplayed ? 'results-displayed' : ''

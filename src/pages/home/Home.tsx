@@ -1,9 +1,13 @@
-import { useAuth } from '../../context/AuthContext';
+import { useContext } from 'react';
+import { AuthContext, useAuth } from '../../context/AuthContext';
 import './Home.css';
+import { auth } from '../../../firebaseConfig';
 
 // consume the context
 const Home = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const { user } = useContext(AuthContext);
+  console.log('auth :>> ', auth.currentUser);
 
   return (
     <div className='centered-container'>

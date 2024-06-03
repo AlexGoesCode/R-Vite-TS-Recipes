@@ -1,29 +1,40 @@
 /* Mobile-first styles */
 .navbar {
-  width: 70%; /* Ensure the navbar takes the full width */
-  background-color: #fff; /* Optional: To make sure the navbar has a background */
-  z-index: 1000; /* Optional: To make sure the navbar is above other elements */
-  height: 80px; /* Align the navbar items to the right */
-  font-size: 20px; /* Optional: To make the text larger */
-  align-items: stretch; /* Optional: To make sure the navbar items are the same height */
-  white-space: nowrap;
+  /* Ensure the navbar takes the full width */
+  /* width: 70%; */
+  /* Optional: To make sure the navbar has a background */
+  /* background-color: #fff; */
+  /* Optional: To make sure the navbar is above other elements */
+  /* z-index: 1000; */
+  /* Align the navbar items to the right */
+  height: 80px;
+  /* Optional: To make the text larger */
+  /* font-size: 20px; */
+  /* Optional: To make sure the navbar items are the same height */
+  /* align-items: stretch; */
+  /* white-space: nowrap; */
 }
 
-.justify-content-between.navbar-collapse.collapse {
+/* .justify-content-between.navbar-collapse.collapse {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 /* Tablet and above */
-@media (min-width: 480px) {
+/* @media (min-width: 480px) {
   .navbar {
     flex-direction: row;
     justify-content: space-between;
   }
-}
+} */
 
 /* Ensure the d-flex alignment is correct */
-.navbar .d-flex {
+/* .navbar .d-flex {
   display: flex;
   align-items: center;
+} */
+
+.me-2 {
+  font-size: normal;
+  position: relative;
 }

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { useAuth } from '../../context/AuthContext';
+import { AuthContext, useAuth } from '../../context/AuthContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 
@@ -8,9 +8,9 @@ const Login = () => {
   // define the Login component
   const [username, setUsername] = useState(''); // useState hooks to declare
   const [password, setPassword] = useState(''); // username and password
-  const [error, setError] = useState(''); // error state
-  const { setUser } = useAuth(); // set the user state after a successful login.
 
+  // const { setUser } = useAuth(); // set the user state after a successful login.
+  const { login, setError, error } = useContext(AuthContext);
   const handleLogin = async () => {
     // define the handleLogin function
 
@@ -19,21 +19,7 @@ const Login = () => {
       setError('Password must be at least 6 characters long.');
       return;
     }
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        // authenticate the user w. email and pass
-        auth,
-        username,
-        password
-      );
-      // Set the user object with email
-      setUser({ email: userCredential.user.email! });
-      console.log('User logged in:', userCredential.user);
-    } catch (err) {
-      console.error('Error logging in:', err); // log error
-      setError('Failed to log in. Please try again.');
-    }
+    login(username, password);
   };
 
   // Bootstrap login form

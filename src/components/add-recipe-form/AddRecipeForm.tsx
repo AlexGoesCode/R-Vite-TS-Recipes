@@ -4,14 +4,36 @@ import { db } from '../../../firebaseConfig';
 
 interface AddRecipeFormProps {
   fetchRecipes: () => void;
+  title: string;
+  setTitle: (title: string) => void;
+  ingredients: string;
+  setIngredients: (ingredients: string) => void;
+  image: string;
+  setImage: (image: string) => void;
+  author: string;
+  setAuthor: (author: string) => void;
+  instructions: string;
+  setInstructions: (instructions: string) => void;
 }
 
-const AddRecipeForm = ({ fetchRecipes }: AddRecipeFormProps) => {
-  const [title, setTitle] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
-  const [image, setImage] = useState('');
-  const [author, setAuthor] = useState('');
+const AddRecipeForm = ({
+  fetchRecipes,
+  title,
+  setTitle,
+  author,
+  setImage,
+  ingredients,
+  setAuthor,
+  setIngredients,
+  image,
+  instructions,
+  setInstructions,
+}: AddRecipeFormProps) => {
+  // const [title, setTitle] = useState('');
+  // const [ingredients, setIngredients] = useState('');
+  // const [instructions, setInstructions] = useState('');
+  // const [image, setImage] = useState('');
+  // const [author, setAuthor] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
