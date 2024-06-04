@@ -6,11 +6,13 @@ interface Character {
   image: string;
 }
 
+// interface for the props that the CharactersGrid component will receive
 interface CharactersGridProps {
   characters: Character[];
   onCharacterClick: (character: Character) => void; // Prop to handle character click
 }
 
+// CharactersGrid component receives the characters and onCharacterClick props
 const CharactersGrid = ({
   characters,
   onCharacterClick,

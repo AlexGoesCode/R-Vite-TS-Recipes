@@ -53,7 +53,7 @@ h1 {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1.2em;
-  width: 500px;
+  width: 450px;
 }
 
 .philosophy-block {
@@ -65,7 +65,7 @@ h1 {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1.2em;
-  width: 500px;
+  width: 450px;
 }
 
 @media (max-width: 768px) {

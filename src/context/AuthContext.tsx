@@ -25,6 +25,7 @@ interface AuthContextProps {
   logout: () => void;
 }
 
+// Create the initial context state
 const ContextInit = {
   user: null,
   error: '',
@@ -56,6 +57,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [error, setError] = useState(''); // error state
 
+  // Get the user from Firebase
   const getUserFromFirebase = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -63,7 +65,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
         const email = user.email!;
-        setUser({ email: email });
+        setUser({ email: email, uid: uid }); // Fix: Include uid property in the user object
       } else {
         // User is signed out
         console.log('user is not logged in');
@@ -95,6 +97,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  // Logout function
   const logout = () => {
     signOut(auth)
       .then(() => {
@@ -114,6 +117,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     getUserFromFirebase();
   }, []);
 
+  // Return the provider with the value of the context
   return (
     <AuthContext.Provider
       value={{ user, setUser, login, logout, error, setError }}

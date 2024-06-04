@@ -7,6 +7,7 @@ type Character = {
   image: string;
 };
 
+// interface for the props that the RecipeList component will receive
 interface RecipeListProps {
   characters: Character[];
   onCharacterClick: (character: Character) => void;
@@ -15,6 +16,8 @@ interface RecipeListProps {
   handlePageChange: (page: number) => void;
 }
 
+// RecipeList component receives the characters, onCharacterClick,
+// totalPages, currentPage, and handlePageChange props
 function RecipeList(props: RecipeListProps) {
   const getPaginationItems = () => {
     const items = [];
@@ -23,6 +26,7 @@ function RecipeList(props: RecipeListProps) {
     let startPage = Math.max(1, props.currentPage - halfPageItems);
     let endPage = Math.min(props.totalPages, props.currentPage + halfPageItems);
 
+    // Adjust startPage and endPage, if too close to the start or end
     if (props.currentPage - halfPageItems <= 0) {
       endPage = Math.min(
         props.totalPages,
@@ -37,6 +41,7 @@ function RecipeList(props: RecipeListProps) {
       );
     }
 
+    // create the pagination items
     for (let number = startPage; number <= endPage; number++) {
       items.push(
         <Pagination.Item
@@ -52,13 +57,15 @@ function RecipeList(props: RecipeListProps) {
     return items;
   };
 
+  // RecipeList component returns the CharactersGrid component and Pagination
   return (
+    // display CharactersGrid component and Pagination
     <div className='recipe-list'>
       <CharactersGrid
         characters={props.characters}
         onCharacterClick={props.onCharacterClick}
       />
-      {props.totalPages > 1 && (
+      {props.totalPages > 1 && ( // display pagination only if there is more than one page
         <Pagination>
           <Pagination.First onClick={() => props.handlePageChange(1)} />
           <Pagination.Prev

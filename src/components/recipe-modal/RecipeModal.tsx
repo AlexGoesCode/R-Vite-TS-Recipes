@@ -10,6 +10,7 @@ interface RecipeModalProps {
   handleDeleteRecipe: (id: string) => void;
 }
 
+// RecipeModal component receives the showModal, selectedRecipe, handleCloseModal
 function RecipeModal(props: RecipeModalProps) {
   return (
     <Modal show={props.showModal} onHide={props.handleCloseModal}>

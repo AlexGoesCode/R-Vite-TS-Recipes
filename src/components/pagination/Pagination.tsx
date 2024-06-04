@@ -1,5 +1,6 @@
 import Pagination from 'react-bootstrap/Pagination';
 
+//! Bootstrap pagination
 function AdvancedExample() {
   return (
     <Pagination>
