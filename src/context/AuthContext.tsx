@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { set } from 'firebase/database';
+
 import {
   createContext,
   useState,
@@ -33,9 +33,10 @@ const ContextInit = {
     throw new Error('Context not initialised');
   },
   setError: (error: string) => {
-    throw new Error('Context not initialised');
+    throw new Error(`Context not initialised ${error}`);
   },
   login: (email: string, password: string) => {
+    console.log(email, password);
     throw new Error('Context not initialised');
   },
   logout: () => {

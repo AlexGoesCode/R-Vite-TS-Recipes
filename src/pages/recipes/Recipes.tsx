@@ -154,10 +154,10 @@ const Recipes = () => {
     setSelectedRecipe(null);
   };
 
-  const handleEditRecipe = async (recipeId: string) => {
+  const handleEditRecipe = async (recipe: Recipe) => {
     // Logic to edit the recipe
-    console.log('Edit recipe:', recipeId);
-    const recipeToEdit = doc(db, 'recipes', recipeId);
+    console.log('Edit recipe:', recipe.id);
+    const recipeToEdit = doc(db, 'recipes', recipe.id);
     console.log('recipeToEdit :>> ', recipeToEdit);
     await updateDoc(recipeToEdit, {
       title: 'modified title',

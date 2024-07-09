@@ -6,7 +6,7 @@ interface RecipeModalProps {
   showModal: boolean;
   selectedRecipe: Recipe | null;
   handleCloseModal: () => void;
-  handleEditRecipe: (recipe: Recipe) => void;
+  handleEditRecipe: (recipe: Recipe) => Promise<void>;
   handleDeleteRecipe: (id: string) => void;
 }
 

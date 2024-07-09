@@ -1,8 +1,6 @@
 import { useContext, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { AuthContext, useAuth } from '../../context/AuthContext';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebaseConfig';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = () => {
   // define the Login component

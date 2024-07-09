@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext, useAuth } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import './Home.css';
 import { auth } from '../../../firebaseConfig';
 
