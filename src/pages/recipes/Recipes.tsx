@@ -52,7 +52,7 @@ const Recipes = () => {
     try {
       const response = await fetch(
         `${API_URL}?apiKey=${
-          import.meta.env.API_KEY
+          import.meta.env.VITE_API_KEY
         }&query=${query}&diet=${diet}&includeIngredients=${ingredient}&number=3&offset=${
           (page - 1) * 3
         }`
