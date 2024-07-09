@@ -1,4 +1,4 @@
-import CharactersGrid from '../../components/characters-grid/CharactersGrid';
+import CharactersGrid from '../characters-grid/CharactersGrid';
 import Pagination from 'react-bootstrap/Pagination';
 
 type Character = {

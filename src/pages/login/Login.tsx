@@ -6,8 +6,8 @@ import { auth } from '../../../firebaseConfig';
 
 const Login = () => {
   // define the Login component
-  const [username, setUsername] = useState(''); // useState hooks to declare
-  const [password, setPassword] = useState(''); // username and password
+  const [username, setUsername] = useState(''); //* useState hooks to declare
+  const [password, setPassword] = useState(''); //* username and password
 
   // const { setUser } = useAuth(); // set the user state after a successful login.
   const { login, setError, error } = useContext(AuthContext);
