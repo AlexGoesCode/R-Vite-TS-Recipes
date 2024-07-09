@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Recipes.css';
-import { API_KEY } from '../../assets/secret/secret';
+
 import SearchBar from '../../components/search-bar/SearchBar';
 import RecipeList from '../../components/recipe-list/RecipeList';
 import RecipeModal from '../../components/recipe-modal/RecipeModal';
