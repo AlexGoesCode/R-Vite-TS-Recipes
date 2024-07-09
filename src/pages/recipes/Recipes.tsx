@@ -51,7 +51,9 @@ const Recipes = () => {
     const API_URL = `https://api.spoonacular.com/recipes/complexSearch`;
     try {
       const response = await fetch(
-        `${API_URL}?apiKey=${API_KEY}&query=${query}&diet=${diet}&includeIngredients=${ingredient}&number=3&offset=${
+        `${API_URL}?apiKey=${
+          import.meta.env.API_KEY
+        }&query=${query}&diet=${diet}&includeIngredients=${ingredient}&number=3&offset=${
           (page - 1) * 3
         }`
       );
