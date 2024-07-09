@@ -62,7 +62,9 @@ const Recipes = () => {
       const detailedRecipes = await Promise.all(
         data.results.map(async (recipe: any) => {
           const detailsResponse = await fetch(
-            `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${API_KEY}`
+            `https://api.spoonacular.com/recipes/${
+              recipe.id
+            }/information?apiKey=${import.meta.env.VITE_API_KEY}`
           );
           if (!detailsResponse.ok) {
             throw new Error('Failed to fetch recipe details');
